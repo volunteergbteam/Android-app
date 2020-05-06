@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginTop="8dp">
+
+    <ImageView
+        android:id="@+id/chat_list_item_avatar"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:src="@drawable/ic_launcher_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/users_avatar" />
+
+    <TextView
+        android:id="@+id/chat_list_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/chat_list_item_avatar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/chat_list_item_text"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="Иванов Иван"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_marginStart="16dp"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/chat_list_item_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/chat_list_item_name"
+        app:layout_constraintTop_toBottomOf="@id/chat_list_item_name"
+        app:layout_constraintBottom_toBottomOf="@id/chat_list_item_avatar"
+        tools:text="Мне нужна помощь помогите мне так как мне нужна помощь"
+        android:layout_marginTop="4dp"
+        android:maxLines="1"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

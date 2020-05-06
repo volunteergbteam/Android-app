@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_map">
+
+    <fragment
+        android:id="@+id/navigation_map"
+        android:name="ru.nightgoat.volunteer.ui.map.MapFragment"
+        android:label="@string/title_map"
+        tools:layout="@layout/fragment_map" >
+        <action
+            android:id="@+id/action_navigation_map_to_navigation_addEvent"
+            app:destination="@id/navigation_addEvent"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_account"
+        android:name="ru.nightgoat.volunteer.ui.account.AccountFragment"
+        android:label="@string/title_account"
+        tools:layout="@layout/fragment_account" >
+        <action
+            android:id="@+id/action_navigation_account_to_navigation_edit_account"
+            app:destination="@id/navigation_edit_account"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_navigation_account_to_navigation_events"
+            app:destination="@id/navigation_events"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_edit_account"
+        android:name="ru.nightgoat.volunteer.ui.edit_account.EditAccountFragment"
+        android:label="@string/title_edit_account"
+        tools:layout="@layout/fragment_edit_accout"/>
+
+
+    <fragment
+        android:id="@+id/navigation_chat"
+        android:name="ru.nightgoat.volunteer.ui.chat.list.ChatListFragment"
+        android:label="@string/title_chat"
+        tools:layout="@layout/fragment_chat_list" />
+
+    <fragment
+        android:id="@+id/navigation_addEvent"
+        android:name="ru.nightgoat.volunteer.ui.addEvent.AddEventFragment"
+        android:label="@string/add_event"
+        tools:layout="@layout/fragment_add_event" />
+
+    <fragment
+        android:id="@+id/navigation_events"
+        android:name="ru.nightgoat.volunteer.ui.events.EventsFragment"
+        android:label="@string/add_event"
+        tools:layout="@layout/fragment_events" />
+
+</navigation>

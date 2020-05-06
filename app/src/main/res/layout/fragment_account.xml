@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="vertical"
+        tools:context=".ui.login.LoginFragment">
+
+        <ImageView
+            android:id="@+id/account_avatar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/logo"
+            android:src="@drawable/ic_launcher_foreground" />
+
+        <RatingBar
+            android:id="@+id/account_rating"
+            style="@style/Widget.AppCompat.RatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:numStars="5"
+            android:isIndicator="true"/>
+
+        <TextView
+            style="@style/ProfileTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/name" />
+
+        <TextView
+            android:id="@+id/account_text_name"
+            style="@style/ProfileText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Иванов Иван Иванович" />
+
+        <TextView
+            style="@style/ProfileTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/email" />
+
+        <TextView
+            android:id="@+id/account_text_email"
+            style="@style/ProfileText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="email@email.com" />
+
+        <TextView
+            style="@style/ProfileTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_self" />
+
+        <TextView
+            android:id="@+id/account_text_about"
+            style="@style/ProfileText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Всегда хотел помогать людям, и вот, помогаю." />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/account_btn_edit"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="@string/edit" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/account_btn_settings"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:gravity="center"
+            android:text="@string/settings" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/account_btn_tasks"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:gravity="center"
+            android:text="@string/active_tasks" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/account_btn_exit"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:backgroundTint="@color/colorRed"
+            android:gravity="center"
+            android:text="@string/exit" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
