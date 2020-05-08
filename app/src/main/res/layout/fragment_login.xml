@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.login.LoginFragment">
+    tools:context=".ui.login.loginFragment.LoginFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,15 +17,15 @@
         android:layout_marginEnd="32dp">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher_foreground"
+            android:layout_width="196dp"
+            android:layout_height="196dp"
+            android:src="@drawable/logo"
             android:contentDescription="@string/logo" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="22dp"
             android:hint="@string/your_email"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             >
@@ -39,7 +39,6 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/login_edit_pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -48,6 +47,7 @@
             >
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/login_edit_pass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"

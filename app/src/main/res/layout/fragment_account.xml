@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:orientation="vertical"
-        tools:context=".ui.login.LoginFragment">
+        tools:context=".ui.login.loginFragment.LoginFragment">
 
         <ImageView
             android:id="@+id/account_avatar"

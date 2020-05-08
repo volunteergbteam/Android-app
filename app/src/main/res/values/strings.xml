@@ -1,8 +1,5 @@
 <resources>
-    <string name="app_name">Volunteer</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="app_name">Вместе</string>
     <string name="your_email">Ваш Email</string>
     <string name="yours_pass">Ваш пароль</string>
     <string name="Cant_remember">Не помню</string>
@@ -27,9 +24,6 @@
     <string name="login">Авторизоваться</string>
     <string name="exit">Выйти</string>
     <string name="save">Сохранить</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_edit_account">Изменить профиль</string>
     <string name="users_avatar">Пользовательский аватар</string>
     <string name="message">Сообщение</string>
@@ -44,4 +38,5 @@
     <string name="cancel">Отменить</string>
     <string name="avatar">Аватар отправителя</string>
     <string name="help">Помочь</string>
+    <string name="wrongEmailPass">Введены неверные почта и/или пароль</string>
 </resources>
