@@ -6,12 +6,16 @@ import dagger.android.DaggerApplication
 import io.reactivex.exceptions.UndeliverableException
 import io.reactivex.plugins.RxJavaPlugins
 import net.danlew.android.joda.JodaTimeAndroid
+import ru.nightgoat.volunteer.di.components.DaggerAppComponent
 import timber.log.Timber
 import java.net.UnknownHostException
 
 class App : DaggerApplication() {
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-        TODO("Not yet implemented")
+        return DaggerAppComponent
+            .builder()
+            .application(this)
+            .build()
     }
 
     override fun onCreate() {
