@@ -4,12 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import ru.nightgoat.volunteer.data.entity.EventEntity
+import ru.nightgoat.volunteer.data.db.entity.LocationEventsEntity
 
-@Database(entities = [EventEntity::class], version = 0, exportSchema = false)
+@Database(entities = [LocationEventsEntity::class], version = 1, exportSchema = false)
 abstract class VolunteerDatabase : RoomDatabase() {
 
-    abstract fun dao(): Dao
+    abstract fun dao(): mDao
 
     companion object {
 

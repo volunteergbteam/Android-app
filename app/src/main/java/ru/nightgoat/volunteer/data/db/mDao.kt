@@ -3,5 +3,5 @@ import androidx.room.*
 import androidx.room.Dao
 
 @Dao
-interface Dao {
+interface mDao {
 }

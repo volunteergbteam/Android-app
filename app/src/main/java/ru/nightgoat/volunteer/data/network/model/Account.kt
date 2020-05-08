@@ -1,4 +1,4 @@
-package ru.nightgoat.volunteer.network.model
+package ru.nightgoat.volunteer.data.network.model
 
 data class Account (
     var name: String,
