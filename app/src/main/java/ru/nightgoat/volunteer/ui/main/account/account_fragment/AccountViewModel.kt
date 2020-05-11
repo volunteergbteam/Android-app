@@ -1,4 +1,4 @@
-package ru.nightgoat.volunteer.ui.main.account
+package ru.nightgoat.volunteer.ui.main.account.account_fragment
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,6 +13,7 @@ class AccountViewModel @Inject constructor(private val interactor: Interactor) :
         value = Account(
             "Иван Иванович",
             "email@email.ru",
+            "Санкт-Петербург",
             "Всегда хотел помогать, и вот, помогаю",
             4.6f
         )

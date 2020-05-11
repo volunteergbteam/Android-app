@@ -2,12 +2,12 @@ package ru.nightgoat.weather.di.builder
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import ru.nightgoat.volunteer.ui.main.account.AccountFragment
+import ru.nightgoat.volunteer.ui.main.account.account_fragment.AccountFragment
 import ru.nightgoat.volunteer.ui.main.addEvent.AddEventFragment
 import ru.nightgoat.volunteer.ui.main.chat.chat.ChatFragment
 import ru.nightgoat.volunteer.ui.main.chat.list.ChatListFragment
-import ru.nightgoat.volunteer.ui.main.edit_account.EditAccountFragment
-import ru.nightgoat.volunteer.ui.main.events.EventsFragment
+import ru.nightgoat.volunteer.ui.main.account.edit_account.EditAccountFragment
+import ru.nightgoat.volunteer.ui.main.events.active.ActiveEventsFragment
 import ru.nightgoat.volunteer.ui.main.map.MapFragment
 import ru.nightgoat.volunteer.ui.main.settings.SettingsFragment
 
@@ -30,7 +30,7 @@ abstract class MainActivityProviders {
     abstract fun provideEditAccountFragment(): EditAccountFragment
 
     @ContributesAndroidInjector
-    abstract fun provideEventsFragment(): EventsFragment
+    abstract fun provideEventsFragment(): ActiveEventsFragment
 
     @ContributesAndroidInjector
     abstract fun provideMapFragment(): MapFragment

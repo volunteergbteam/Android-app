@@ -1,4 +1,4 @@
-package ru.nightgoat.volunteer.ui.main.edit_account
+package ru.nightgoat.volunteer.ui.main.events.active
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,46 +6,37 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.fragment_edit_accout.*
+import kotlinx.android.synthetic.main.fragment_active_events.*
+
 import ru.nightgoat.volunteer.R
 import ru.nightgoat.volunteer.ui.base.BaseFragment
 import javax.inject.Inject
 
-class EditAccountFragment : BaseFragment() {
+class ActiveEventsFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val viewModel: EditAccountViewModel by lazy {
-        ViewModelProvider(this, viewModelFactory).get(EditAccountViewModel::class.java)
+    private val viewModelActive: ActiveEventsViewModel by lazy {
+        ViewModelProvider(this, viewModelFactory).get(ActiveEventsViewModel::class.java)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_edit_accout, container, false)
+        return inflater.inflate(R.layout.fragment_active_events, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         onBackBtnClickListener()
-        onSaveBtnClickListener()
-    }
-
-    private fun onSaveBtnClickListener() {
-        editAcc_btn_save.setOnClickListener {
-            saveAccount()
-            findNavController().popBackStack()
-        }
-    }
-
-    private fun saveAccount() {
     }
 
     private fun onBackBtnClickListener() {
-        editAcc_toolbar.setNavigationOnClickListener {
+        events_toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
     }
+
 }

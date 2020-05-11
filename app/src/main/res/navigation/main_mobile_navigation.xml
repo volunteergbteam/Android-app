@@ -21,9 +21,9 @@
 
     <fragment
         android:id="@+id/navigation_account"
-        android:name="ru.nightgoat.volunteer.ui.main.account.AccountFragment"
+        android:name="ru.nightgoat.volunteer.ui.main.account.account_fragment.AccountFragment"
         android:label="@string/title_account"
-        tools:layout="@layout/fragment_account" >
+        tools:layout="@layout/frag_acc" >
         <action
             android:id="@+id/action_navigation_account_to_navigation_edit_account"
             app:destination="@id/navigation_edit_account"
@@ -42,9 +42,9 @@
 
     <fragment
         android:id="@+id/navigation_edit_account"
-        android:name="ru.nightgoat.volunteer.ui.main.edit_account.EditAccountFragment"
+        android:name="ru.nightgoat.volunteer.ui.main.account.edit_account.EditAccountFragment"
         android:label="@string/title_edit_account"
-        tools:layout="@layout/fragment_edit_accout"/>
+        tools:layout="@layout/fragment_account_edit"/>
 
 
     <fragment
@@ -61,8 +61,8 @@
 
     <fragment
         android:id="@+id/navigation_events"
-        android:name="ru.nightgoat.volunteer.ui.main.events.EventsFragment"
+        android:name="ru.nightgoat.volunteer.ui.main.events.active.ActiveEventsFragment"
         android:label="@string/add_event"
-        tools:layout="@layout/fragment_events" />
+        tools:layout="@layout/fragment_active_events" />
 
 </navigation>

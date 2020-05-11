@@ -18,9 +18,9 @@
     <string name="name">Имя</string>
     <string name="edit">Изменить</string>
     <string name="settings">Настройки</string>
-    <string name="email">email</string>
+    <string name="email">Email</string>
     <string name="about_self">О себе</string>
-    <string name="active_tasks">Активные задачи</string>
+    <string name="active_events">Активные события</string>
     <string name="login">Авторизоваться</string>
     <string name="exit">Выйти</string>
     <string name="save">Сохранить</string>
@@ -39,4 +39,13 @@
     <string name="avatar">Аватар отправителя</string>
     <string name="help">Помочь</string>
     <string name="wrongEmailPass">Введены неверные почта и/или пароль</string>
+    <string name="city">Город</string>
+    <string name="pass">Пароль</string>
+    <string name="second_name">Фамилия</string>
+    <string name="mine_events">Мои события</string>
+    <string name="old_pass">Предыдущий пароль</string>
+    <string name="new_pass">Новый пароль</string>
+    <string name="edit_email">Изменить email</string>
+    <string name="edit_pass">Изменить пароль</string>
+    <string name="delete">Удалить</string>
 </resources>
