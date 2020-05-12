@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import dagger.android.support.DaggerFragment
 
 abstract class BaseFragment : DaggerFragment() {
@@ -21,5 +22,9 @@ abstract class BaseFragment : DaggerFragment() {
 
     fun showLongToast(text: String) {
         Toast.makeText(requireContext(), text, Toast.LENGTH_LONG).show()
+    }
+
+    fun navigateTo(action: Int) {
+        findNavController().navigate(action)
     }
 }

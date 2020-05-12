@@ -32,26 +32,42 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
-            android:id="@+id/action_navigation_account_to_navigation_events"
-            app:destination="@id/navigation_events_active"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            android:id="@+id/action_navigation_account_to_navigation_events_my"
+            app:destination="@id/navigation_events_my" />
+        <action
+            android:id="@+id/action_navigation_account_to_navigation_events_active"
+            app:destination="@id/navigation_events_active" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_edit_account"
         android:name="ru.nightgoat.volunteer.ui.main.account.edit_account.EditAccountFragment"
         android:label="@string/title_edit_account"
-        tools:layout="@layout/frag_acc_edit"/>
+        tools:layout="@layout/frag_acc_edit">
+        <action
+            android:id="@+id/action_navigation_edit_account_to_navigation_edit_account_email"
+            app:destination="@id/navigation_edit_account_email" />
+        <action
+            android:id="@+id/action_navigation_edit_account_to_navigation_edit_account_pass"
+            app:destination="@id/navigation_edit_account_pass" />
+    </fragment>
 
 
     <fragment
-        android:id="@+id/navigation_chat"
+        android:id="@+id/navigation_chat_list"
         android:name="ru.nightgoat.volunteer.ui.main.chat.list.ChatListFragment"
+        android:label="@string/title_chat_list"
+        tools:layout="@layout/fragment_chat_list" >
+        <action
+            android:id="@+id/action_navigation_chat_list_to_navigation_chat"
+            app:destination="@id/navigation_chat" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_chat"
+        android:name="ru.nightgoat.volunteer.ui.main.chat.chat.ChatFragment"
         android:label="@string/title_chat"
-        tools:layout="@layout/fragment_chat_list" />
+        tools:layout="@layout/fragment_chat" />
 
     <fragment
         android:id="@+id/navigation_addEvent"
@@ -62,14 +78,26 @@
     <fragment
         android:id="@+id/navigation_events_active"
         android:name="ru.nightgoat.volunteer.ui.main.events.active.ActiveEventsFragment"
-        android:label="@string/add_event"
+        android:label="@string/active_events"
         tools:layout="@layout/fragment_events_active" />
 
     <fragment
         android:id="@+id/navigation_events_my"
         android:name="ru.nightgoat.volunteer.ui.main.events.active.ActiveEventsFragment"
-        android:label="@string/add_event"
-        tools:layout="@layout/fragment_e" />
+        android:label="@string/my_events"
+        tools:layout="@layout/fragment_events_my" />
+
+    <fragment
+        android:id="@+id/navigation_edit_account_email"
+        android:name="ru.nightgoat.volunteer.ui.main.account.changeEmail.ChangeEmailFragment"
+        android:label="@string/edit_email"
+        tools:layout="@layout/frag_acc_edit_email" />
+
+    <fragment
+        android:id="@+id/navigation_edit_account_pass"
+        android:name="ru.nightgoat.volunteer.ui.main.account.changePass.ChangePasswordFragment"
+        android:label="@string/edit_pass"
+        tools:layout="@layout/frag_acc_edit_pass" />
 
 
 

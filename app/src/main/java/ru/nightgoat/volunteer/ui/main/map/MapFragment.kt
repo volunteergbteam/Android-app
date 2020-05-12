@@ -159,11 +159,6 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
             }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        map_view.onSaveInstanceState(outState)
-    }
-
     companion object {
         val TAG = MapFragment::class.simpleName
     }

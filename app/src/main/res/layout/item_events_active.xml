@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     app:cardCornerRadius="4dp"
     android:elevation="8dp"
-    android:layout_margin="8dp"
+    app:cardUseCompatPadding="true"
     android:foreground="?attr/selectableItemBackground"
     >
 
@@ -35,45 +35,47 @@
             android:textSize="20sp"
             tools:text="У моей бабушки кончился хлеб, и она отказывается без него есть!"/>
 
-        <ImageView
-            android:id="@+id/item_events_active_addressIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_place_black_24dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/item_events_active_text_description"
-            android:layout_marginTop="8dp"
-            android:contentDescription="@string/address_icon" />
 
         <TextView
             android:id="@+id/item_events_active_text_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/item_events_active_addressIcon"
-            app:layout_constraintTop_toTopOf="@id/item_events_active_addressIcon"
-            app:layout_constraintBottom_toBottomOf="@id/item_events_active_addressIcon"
-            android:layout_marginStart="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/item_events_active_text_description"
+            android:drawableStart="@drawable/ic_place_black_24dp"
+            android:drawablePadding="4dp"
+            android:layout_marginTop="4dp"
             tools:text="Санкт-Петербург, Невский пр. 1, 2"/>
+
+        <TextView
+            android:id="@+id/item_events_active_text_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/item_events_active_text_address"
+            android:drawableStart="@drawable/ic_person_outline_black_24dp"
+            android:drawablePadding="4dp"
+            tools:text="Иванов Иван"/>
 
         <Button
             android:id="@+id/item_events_active_btn_check_completed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/item_events_active_addressIcon"
+            app:layout_constraintTop_toBottomOf="@id/item_events_active_text_name"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toStartOf="@id/item_events_active_btn_cancel"
+            android:layout_marginTop="8dp"
             android:text="@string/check_completed"/>
 
         <Button
             android:id="@+id/item_events_active_btn_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/item_events_active_addressIcon"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="@id/item_events_active_btn_check_completed"
+            app:layout_constraintBottom_toBottomOf="@id/item_events_active_btn_check_completed"
             app:layout_constraintStart_toEndOf="@id/item_events_active_btn_check_completed"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp"
             android:text="@string/cancel"
             android:backgroundTint="@color/colorRed"/>
 

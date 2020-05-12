@@ -1,21 +1,26 @@
 package ru.nightgoat.volunteer.ui.main.account.changePass
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import kotlinx.android.synthetic.main.frag_acc_edit_pass.*
 
 import ru.nightgoat.volunteer.R
+import ru.nightgoat.volunteer.ui.base.BaseFragment
+import javax.inject.Inject
 
-class ChangePasswordFragment : Fragment() {
+class ChangePasswordFragment : BaseFragment() {
 
-    companion object {
-        fun newInstance() = ChangePasswordFragment()
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val viewModel: ChangePasswordViewModel by lazy {
+        ViewModelProvider(this, viewModelFactory).get(ChangePasswordViewModel::class.java)
     }
-
-    private lateinit var viewModel: ChangePasswordViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,10 +29,15 @@ class ChangePasswordFragment : Fragment() {
         return inflater.inflate(R.layout.frag_acc_edit_pass, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(ChangePasswordViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        onBackBtnClickListener()
+    }
+
+    private fun onBackBtnClickListener() {
+        changePassword_toolbar.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
 }

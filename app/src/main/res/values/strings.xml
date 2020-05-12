@@ -7,7 +7,7 @@
     <string name="no_acc_q">Нет аккаунта?</string>
     <string name="register">Зарегистрироваться</string>
     <string name="yours_pass_repeat">Подтверждение пароля</string>
-    <string name="Argree_with_policy">Согласен с политикой конфидициальности</string>
+    <string name="Argree_with_policy">Согласен с политикой конфиденциальности</string>
     <string name="logo">Логотип</string>
     <string name="recover">Восстановить</string>
     <string name="title_activity_maps">Map</string>
@@ -20,7 +20,7 @@
     <string name="settings">Настройки</string>
     <string name="email">Email</string>
     <string name="about_self">О себе</string>
-    <string name="active_events">Активные события</string>
+    <string name="active_events">Активные мероприятия</string>
     <string name="login">Авторизоваться</string>
     <string name="exit">Выйти</string>
     <string name="save">Сохранить</string>
@@ -42,10 +42,11 @@
     <string name="city">Город</string>
     <string name="pass">Пароль</string>
     <string name="second_name">Фамилия</string>
-    <string name="mine_events">Мои события</string>
+    <string name="my_events">Мои мероприятия</string>
     <string name="old_pass">Предыдущий пароль</string>
     <string name="new_pass">Новый пароль</string>
     <string name="edit_email">Изменить email</string>
     <string name="edit_pass">Изменить пароль</string>
     <string name="delete">Удалить</string>
+    <string name="title_chat_list">Список диалогов</string>
 </resources>

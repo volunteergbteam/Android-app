@@ -1,7 +1,8 @@
 package ru.nightgoat.volunteer.ui.main.account.changeEmail
 
-import androidx.lifecycle.ViewModel
+import ru.nightgoat.volunteer.domain.Interactor
+import ru.nightgoat.volunteer.ui.base.BaseViewModel
+import javax.inject.Inject
 
-class ChangeEmailViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+class ChangeEmailViewModel @Inject constructor(private val interactor: Interactor) : BaseViewModel() {
 }

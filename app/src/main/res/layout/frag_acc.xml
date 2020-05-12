@@ -97,7 +97,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/account_btn_events_mine"
-            android:text="@string/mine_events"
+            android:text="@string/my_events"
             style="@style/Button"
             />
 

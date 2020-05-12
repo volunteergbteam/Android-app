@@ -30,7 +30,21 @@ class EditAccountFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         onBackBtnClickListener()
+        onChangeEmailBtnClickListener()
+        onChangePasswordBtnClickListener()
         onSaveBtnClickListener()
+    }
+
+    private fun onChangePasswordBtnClickListener() {
+        editAcc_btn_edit_password.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_edit_account_to_navigation_edit_account_pass)
+        }
+    }
+
+    private fun onChangeEmailBtnClickListener() {
+        editAcc_btn_edit_email.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_edit_account_to_navigation_edit_account_email)
+        }
     }
 
     private fun onSaveBtnClickListener() {
