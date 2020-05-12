@@ -1,4 +1,4 @@
-package ru.nightgoat.volunteer.ui.main.account.changePass
+package ru.nightgoat.volunteer.ui.main.events.my
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -9,24 +9,24 @@ import android.view.ViewGroup
 
 import ru.nightgoat.volunteer.R
 
-class ChangePasswordFragment : Fragment() {
+class MyEventsFragment : Fragment() {
 
     companion object {
-        fun newInstance() = ChangePasswordFragment()
+        fun newInstance() = MyEventsFragment()
     }
 
-    private lateinit var viewModel: ChangePasswordViewModel
+    private lateinit var viewModel: MyEventsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.frag_acc_edit_pass, container, false)
+        return inflater.inflate(R.layout.fragment_events_my, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(ChangePasswordViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(MyEventsViewModel::class.java)
         // TODO: Use the ViewModel
     }
 

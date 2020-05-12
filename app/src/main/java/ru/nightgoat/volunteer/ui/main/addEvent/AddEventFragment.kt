@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.fragment_add_event.*
+import kotlinx.android.synthetic.main.frag_map_add_event.*
 
 import ru.nightgoat.volunteer.R
 import ru.nightgoat.volunteer.ui.base.BaseFragment
@@ -25,7 +25,7 @@ class AddEventFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_add_event, container, false)
+        return inflater.inflate(R.layout.frag_map_add_event, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -2,7 +2,6 @@ package ru.nightgoat.volunteer.ui.main.map
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.location.Geocoder
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,19 +15,15 @@ import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import io.reactivex.Observable
-import io.reactivex.Single
-import kotlinx.android.synthetic.main.fragment_map.*
+import kotlinx.android.synthetic.main.frag_map.*
 import ru.nightgoat.volunteer.R
 import ru.nightgoat.volunteer.data.network.model.EventModel
 import ru.nightgoat.volunteer.ui.base.BaseFragment
 import timber.log.Timber
-import java.util.*
 import javax.inject.Inject
 
 class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
@@ -51,7 +46,7 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_map, container, false)
+        return inflater.inflate(R.layout.frag_map, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

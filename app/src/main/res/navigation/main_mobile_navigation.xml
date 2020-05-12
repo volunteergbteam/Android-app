@@ -9,7 +9,7 @@
         android:id="@+id/navigation_map"
         android:name="ru.nightgoat.volunteer.ui.main.map.MapFragment"
         android:label="@string/title_map"
-        tools:layout="@layout/fragment_map" >
+        tools:layout="@layout/frag_map" >
         <action
             android:id="@+id/action_navigation_map_to_navigation_addEvent"
             app:destination="@id/navigation_addEvent"
@@ -33,7 +33,7 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/action_navigation_account_to_navigation_events"
-            app:destination="@id/navigation_events"
+            app:destination="@id/navigation_events_active"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
@@ -44,7 +44,7 @@
         android:id="@+id/navigation_edit_account"
         android:name="ru.nightgoat.volunteer.ui.main.account.edit_account.EditAccountFragment"
         android:label="@string/title_edit_account"
-        tools:layout="@layout/fragment_account_edit"/>
+        tools:layout="@layout/frag_acc_edit"/>
 
 
     <fragment
@@ -57,12 +57,20 @@
         android:id="@+id/navigation_addEvent"
         android:name="ru.nightgoat.volunteer.ui.main.addEvent.AddEventFragment"
         android:label="@string/add_event"
-        tools:layout="@layout/fragment_add_event" />
+        tools:layout="@layout/frag_map_add_event" />
 
     <fragment
-        android:id="@+id/navigation_events"
+        android:id="@+id/navigation_events_active"
         android:name="ru.nightgoat.volunteer.ui.main.events.active.ActiveEventsFragment"
         android:label="@string/add_event"
-        tools:layout="@layout/fragment_active_events" />
+        tools:layout="@layout/fragment_events_active" />
+
+    <fragment
+        android:id="@+id/navigation_events_my"
+        android:name="ru.nightgoat.volunteer.ui.main.events.active.ActiveEventsFragment"
+        android:label="@string/add_event"
+        tools:layout="@layout/fragment_e" />
+
+
 
 </navigation>

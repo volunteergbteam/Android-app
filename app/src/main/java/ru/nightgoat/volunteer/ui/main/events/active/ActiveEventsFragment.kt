@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.fragment_active_events.*
+import kotlinx.android.synthetic.main.fragment_events_active.*
 
 import ru.nightgoat.volunteer.R
 import ru.nightgoat.volunteer.ui.base.BaseFragment
@@ -25,7 +25,7 @@ class ActiveEventsFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_active_events, container, false)
+        return inflater.inflate(R.layout.fragment_events_active, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -34,7 +34,7 @@ class ActiveEventsFragment : BaseFragment() {
     }
 
     private fun onBackBtnClickListener() {
-        events_toolbar.setNavigationOnClickListener {
+        events_my_toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
     }
