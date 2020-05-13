@@ -18,9 +18,9 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/register_btn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/register_toolbar"
-        app:layout_constraintBottom_toTopOf="@id/register_btn">
+        app:layout_constraintTop_toBottomOf="@id/register_toolbar">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,6 +28,7 @@
             android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/register_textLayout_name"
                 style="@style/TextInputLayout"
                 android:hint="@string/name">
 
@@ -35,11 +36,12 @@
                     android:id="@+id/register_edit_name_first"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName" />
+                    android:inputType="textCapSentences" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/register_textLayout_second_name"
                 style="@style/TextInputLayout"
                 android:hint="@string/second_name">
 
@@ -47,11 +49,12 @@
                     android:id="@+id/register_edit_name_second"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName" />
+                    android:inputType="textCapSentences" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/register_textLayout_email"
                 style="@style/TextInputLayout"
                 android:hint="@string/email">
 
@@ -64,6 +67,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/register_textLayout_first_password"
                 style="@style/TextInputLayout"
                 android:hint="@string/pass">
 
@@ -76,6 +80,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/register_textLayout_second_password"
                 style="@style/TextInputLayout"
                 android:hint="@string/yours_pass_repeat">
 
@@ -93,7 +98,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/register_edit_about_me"
-                    style="@style/AboutTextInput"/>
+                    style="@style/AboutTextInput" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -101,8 +106,8 @@
                 android:id="@+id/register_policy_checkbox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:checked="false"
                 android:paddingStart="16dp"
