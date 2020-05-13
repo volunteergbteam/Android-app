@@ -31,7 +31,7 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    lateinit var eventsList : List<EventModel>
+    lateinit var eventsList: List<EventModel>
 
     private val viewModel: MapViewModel by lazy {
         ViewModelProvider(this, viewModelFactory).get(MapViewModel::class.java)
@@ -40,6 +40,8 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
     private lateinit var googleMap: GoogleMap
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var currentCoord: LatLng
+    private lateinit var locationRequest: LocationRequest
+    private lateinit var locationCallback: LocationCallback
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,10 +57,10 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
         fusedLocationProviderClient =
             LocationServices.getFusedLocationProviderClient(requireActivity())
         if (isPermissionGranted()) {
-            createLocationRequest()
             map_view.onCreate(savedInstanceState)
             map_view.onResume()
             map_view.getMapAsync(this)
+            createLocationRequest()
             observeViewModel()
         } else {
             ActivityCompat.requestPermissions(
@@ -99,15 +101,20 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
     }
 
     private fun createLocationRequest() {
-        val locationRequest = LocationRequest.create()?.apply {
+        locationRequest = LocationRequest.create().apply {
             interval = 10000
             fastestInterval = 5000
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         }
-        val locationCallback = object : LocationCallback() {
+        locationCallback = object : LocationCallback() {
             override fun onLocationResult(p0: LocationResult?) {
                 if (p0 == null) {
                     return
+                }
+                for (location in p0.locations) {
+                    if (location != null) {
+                        currentCoord = LatLng(location.latitude, location.longitude)
+                    }
                 }
             }
         }
@@ -139,23 +146,20 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
 
     private fun getLocationAndZoom(zoom: Float) {
         fusedLocationProviderClient.lastLocation
-            .addOnCompleteListener {
-                if (it.isSuccessful) {
+            .addOnSuccessListener {
+                it?.let {
                     currentCoord = LatLng(
-                        it.result!!.latitude,
-                        it.result!!.longitude
+                        it.latitude,
+                        it.longitude
                     )
                     googleMap.moveCamera(
                         CameraUpdateFactory
                             .newLatLngZoom(currentCoord, zoom)
                     )
-                } else {
-                    Toast.makeText(
-                        requireContext(),
-                        "unable to get current location",
-                        Toast.LENGTH_SHORT
-                    ).show()
                 }
+            }
+            .addOnFailureListener {
+                showShortToast(it.message.toString())
             }
     }
 
@@ -170,11 +174,12 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
             map_bottom_sheet_description.text = event.description
             val bottomSheetBehavior = BottomSheetBehavior.from(map_bottom_sheet)
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-            googleMap.moveCamera(CameraUpdateFactory
-                .newLatLngZoom(LatLng(event.locationLat, event.locationLon), 15f))
+            googleMap.moveCamera(
+                CameraUpdateFactory
+                    .newLatLngZoom(LatLng(event.locationLat, event.locationLon), 15f)
+            )
             true
-        }
-       else false
+        } else false
     }
 
 }
