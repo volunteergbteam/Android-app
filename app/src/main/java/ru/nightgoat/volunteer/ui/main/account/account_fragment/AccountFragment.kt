@@ -1,5 +1,6 @@
 package ru.nightgoat.volunteer.ui.main.account.account_fragment
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import ru.nightgoat.volunteer.R
 import kotlinx.android.synthetic.main.frag_acc.*
 import ru.nightgoat.volunteer.ui.login.LoginActivity
 import ru.nightgoat.volunteer.ui.base.BaseFragment
+import java.util.*
 import javax.inject.Inject
 
 class AccountFragment : BaseFragment() {
@@ -49,10 +51,9 @@ class AccountFragment : BaseFragment() {
         }
     }
 
-
     private fun observeLiveData() {
         viewModel.accountLiveData.observe(viewLifecycleOwner, Observer {
-            account_text_name.text = it.name
+            account_text_name.text = it.firstName.plus(" ").plus(it.secondName)
             account_text_email.text = it.email
             account_text_city.text = it.city
             account_text_about.text = it.about

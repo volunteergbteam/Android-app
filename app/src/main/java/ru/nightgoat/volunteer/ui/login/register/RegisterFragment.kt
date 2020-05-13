@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_register.*
 import ru.nightgoat.volunteer.R
+import ru.nightgoat.volunteer.data.network.model.Account
 import ru.nightgoat.volunteer.ui.base.BaseFragment
 import ru.nightgoat.volunteer.utils.isValidEmail
 import ru.nightgoat.volunteer.utils.isValidPassword
@@ -47,16 +48,21 @@ class RegisterFragment : BaseFragment() {
         if (isEmailValid &&
             isPasswordValid &&
             isPasswordsAreIdentical) {
-            val name = register_edit_name_first.text.toString()
-            val secondName = register_edit_name_second.text.toString()
-            val email = register_edit_email.text.toString()
-            val password = register_edit_password_first.text.toString()
-            val about = register_edit_about_me.text.toString()
-            register(name, secondName, email, password, about)
+            val account = Account(
+                firstName = register_edit_name_first.text.toString(),
+                secondName = register_edit_name_second.text.toString(),
+                email = register_edit_email.text.toString(),
+                city = register_edit_city.text.toString(),
+                about = register_edit_about_me.text.toString(),
+                rating = 0f
+            )
+            account.password = register_edit_password_first.text.toString()
+            register(account)
         }
     }
 
-    private fun register(name: String, secondName: String, email: String, password: String, about: String) {
+    @Suppress("UNUSED_PARAMETER")
+    private fun register(account: Account) {
     }
 
     private fun onBackBtnClickListener() {

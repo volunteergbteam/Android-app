@@ -11,8 +11,9 @@ class AccountViewModel @Inject constructor(private val interactor: Interactor) :
 
     private val accountMutableLiveData = MutableLiveData<Account>().apply {
         value = Account(
-            "Иван Иванович",
-            "email@email.ru",
+            "Иван",
+            "Иванович",
+            "email@email.com",
             "Санкт-Петербург",
             "Всегда хотел помогать, и вот, помогаю",
             4.6f
