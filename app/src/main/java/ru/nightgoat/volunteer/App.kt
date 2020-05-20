@@ -31,5 +31,6 @@ class App : DaggerApplication() {
             Stetho.initializeWithDefaults(this)
             Timber.plant(Timber.DebugTree())
         }
+
     }
 }
