@@ -8,53 +8,24 @@
     tools:context=".ui.login.register.RegisterFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/editAcc_toolbar"
+        android:id="@+id/changePassword_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
-        app:title="Редактировать профиль" />
+        app:title="Изменить пароль" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp">
-
-        <ImageView
-            android:id="@+id/editAcc_avatar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/logo"
-            android:src="@drawable/ic_launcher_foreground" />
+        android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="@string/name"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            >
+            style="@style/TextInputLayout"
+            android:hint="@string/old_pass">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editAcc_edit_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textEmailAddress" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="@string/email"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editAcc_edit_password_first"
+                android:id="@+id/changePassword_edit_password_old"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword" />
@@ -62,14 +33,23 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:hint="@string/about_self">
+            style="@style/TextInputLayout"
+            android:hint="@string/new_pass">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editAcc_edit_password_second"
+                android:id="@+id/changePassword_edit_password_new"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:hint="@string/yours_pass_repeat">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/changePassword_edit_password_new_repeat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword" />
@@ -79,10 +59,8 @@
     </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/editAcc_btn_save"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:text="@string/save"
-        style="@style/Button"/>
+        android:id="@+id/changePassword_btn_save"
+        style="@style/Button"
+        android:text="@string/save" />
 
 </LinearLayout>

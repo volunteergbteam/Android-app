@@ -1,92 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".ui.login.register.RegisterFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/register_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
         app:title="Регистрация" />
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp">
+        app:layout_constraintBottom_toTopOf="@id/register_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/register_toolbar">
 
-        <com.google.android.material.textfield.TextInputLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:hint="@string/your_email"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            >
+            android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/register_edit_email"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/register_textLayout_name"
+                style="@style/TextInputLayout"
+                android:hint="@string/name">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/register_edit_name_first"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapSentences" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/register_textLayout_second_name"
+                style="@style/TextInputLayout"
+                android:hint="@string/second_name">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/register_edit_name_second"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapSentences" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/register_textLayout_email"
+                style="@style/TextInputLayout"
+                android:hint="@string/email">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/register_edit_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/register_textLayout_first_password"
+                style="@style/TextInputLayout"
+                android:hint="@string/pass">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/register_edit_password_first"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/register_textLayout_second_password"
+                style="@style/TextInputLayout"
+                android:hint="@string/yours_pass_repeat">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/register_edit_password_second"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/register_textLayout_city"
+                style="@style/TextInputLayout"
+                android:hint="@string/city">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/register_edit_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapSentences" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayout"
+                android:hint="@string/about_self">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/register_edit_about_me"
+                    style="@style/AboutTextInput" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/register_policy_checkbox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress" />
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:checked="false"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="@string/Argree_with_policy"
+                android:textSize="18sp" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="@string/yours_pass"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/register_edit_password_first"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:hint="@string/yours_pass_repeat">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/register_edit_password_second"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/register_policy_checkbox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:checked="false"
-            android:text="@string/Argree_with_policy"
-            android:textSize="18sp"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            />
-    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/register_btn"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
+        style="@style/Button"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/register"
-        style="@style/Button"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

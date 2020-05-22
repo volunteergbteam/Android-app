@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class LocationEventsEntity (
+data class UserEventsWishEntity (
     @PrimaryKey(autoGenerate = true)
     var id: Int,
     val title: String,

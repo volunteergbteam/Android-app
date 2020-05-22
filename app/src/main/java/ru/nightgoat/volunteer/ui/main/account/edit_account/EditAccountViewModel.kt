@@ -1,4 +1,4 @@
-package ru.nightgoat.volunteer.ui.main.edit_account
+package ru.nightgoat.volunteer.ui.main.account.edit_account
 
 import androidx.lifecycle.ViewModel
 import ru.nightgoat.volunteer.domain.Interactor

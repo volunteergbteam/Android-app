@@ -1,4 +1,4 @@
-package ru.nightgoat.volunteer.ui.main.addEvent
+package ru.nightgoat.volunteer.ui.main.account.changeEmail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,50 +6,37 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.frag_map_add_event.*
+import kotlinx.android.synthetic.main.frag_acc_edit_email.*
 
 import ru.nightgoat.volunteer.R
 import ru.nightgoat.volunteer.ui.base.BaseFragment
 import javax.inject.Inject
 
-class AddEventFragment : BaseFragment() {
+class ChangeEmailFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val viewModel: AddEventViewModel by lazy {
-        ViewModelProvider(this, viewModelFactory).get(AddEventViewModel::class.java)
+    private val viewModel: ChangeEmailViewModel by lazy {
+        ViewModelProvider(this, viewModelFactory).get(ChangeEmailViewModel::class.java)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.frag_map_add_event, container, false)
+        return inflater.inflate(R.layout.frag_acc_edit_email, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        onCancelBtnClickListener()
-        onSaveBtnClickListener()
+        onBackBtnClickListener()
     }
 
-    private fun onSaveBtnClickListener() {
-        addEvent_btn_save.setOnClickListener {
-            saveEvent()
+    private fun onBackBtnClickListener() {
+        changeEmail_toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
     }
-
-    private fun saveEvent() {
-    }
-
-    private fun onCancelBtnClickListener() {
-        addEvent_toolbar.setNavigationOnClickListener {
-            findNavController().popBackStack()
-        }
-    }
-
-
 
 }

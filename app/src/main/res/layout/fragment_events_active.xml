@@ -4,20 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.main.events.EventsFragment"
+    tools:context=".ui.main.events.active.ActiveEventsFragment"
     android:orientation="vertical">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/events_toolbar"
+        android:id="@+id/events_my_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
-        app:title="Мои мероприятия" />
+        app:title="Активные мероприятия" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/events_recycler"
+        android:id="@+id/events_my_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/item_events"/>
+        tools:listitem="@layout/item_events_active"/>
 
 </LinearLayout>
