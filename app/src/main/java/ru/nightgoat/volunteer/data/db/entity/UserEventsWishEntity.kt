@@ -14,6 +14,7 @@ data class UserEventsWishEntity (
     val eventDate: Long,
     val isOver: Boolean,
     val ownerId: Int,
+    val ownerName: String,
     val inProgress: Boolean,
     val locationId: Int,
     val locationLon: Float,

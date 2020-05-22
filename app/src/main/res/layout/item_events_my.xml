@@ -46,30 +46,20 @@
             android:drawablePadding="4dp"
             tools:text="Санкт-Петербург, Невский пр. 1, 2"/>
 
-        <TextView
-            android:id="@+id/item_events_my_text_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/item_events_my_text_address"
-            android:drawableStart="@drawable/ic_person_outline_black_24dp"
-            android:drawablePadding="4dp"
-            tools:text="Иванов Иван"/>
-
         <Button
             android:id="@+id/item_events_my_btn_check_completed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/item_events_my_text_name"
+            app:layout_constraintTop_toBottomOf="@id/item_events_my_text_address"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/item_events_my_btn_cancel"
+            app:layout_constraintEnd_toStartOf="@id/item_events_my_btn_delete"
             android:layout_marginTop="8dp"
             android:text="@string/check_completed"
             android:drawableStart="@drawable/ic_check_black_24dp"/>
 
         <Button
-            android:id="@+id/item_events_my_btn_cancel"
+            android:id="@+id/item_events_my_btn_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="@id/item_events_my_btn_check_completed"

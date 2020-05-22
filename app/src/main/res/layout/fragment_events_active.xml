@@ -8,14 +8,14 @@
     android:orientation="vertical">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/events_my_toolbar"
+        android:id="@+id/events_active_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
         app:title="Активные мероприятия" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/events_my_recycler"
+        android:id="@+id/events_active_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/item_events_active"/>

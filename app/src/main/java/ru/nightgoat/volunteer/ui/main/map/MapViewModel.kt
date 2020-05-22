@@ -6,6 +6,7 @@ import ru.nightgoat.volunteer.data.network.model.EventModel
 import ru.nightgoat.volunteer.domain.Interactor
 import ru.nightgoat.volunteer.ui.base.BaseViewModel
 import timber.log.Timber
+import java.io.BufferedReader
 import javax.inject.Inject
 
 class MapViewModel @Inject constructor(interactor: Interactor) : BaseViewModel() {
@@ -22,10 +23,12 @@ class MapViewModel @Inject constructor(interactor: Interactor) : BaseViewModel()
                 }, {
                     toastLiveData.value = it.message
                 })
+
         )
     }
 
     companion object {
         val TAG = MapViewModel::class.simpleName
     }
+
 }
