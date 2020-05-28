@@ -1,4 +1,4 @@
-package ru.nightgoat.weather.di.builder
+package ru.nightgoat.volunteer.di.builder
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector

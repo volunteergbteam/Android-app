@@ -10,8 +10,8 @@ import ru.nightgoat.volunteer.di.modules.ContextModule
 import ru.nightgoat.volunteer.di.modules.DataModule
 import ru.nightgoat.volunteer.di.modules.InteractorModule
 import ru.nightgoat.volunteer.di.modules.NetworkModule
-import ru.nightgoat.weather.di.builder.ActivityBuilder
-import ru.nightgoat.weather.di.builder.ViewModelBuilder
+import ru.nightgoat.volunteer.di.builder.ActivityBuilder
+import ru.nightgoat.volunteer.di.builder.ViewModelBuilder
 import javax.inject.Singleton
 
 @Singleton

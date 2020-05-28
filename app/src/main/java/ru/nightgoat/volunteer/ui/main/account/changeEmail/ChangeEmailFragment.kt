@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.frag_acc_edit_email.*
 
 import ru.nightgoat.volunteer.R
+import ru.nightgoat.volunteer.extentions.popBackStack
 import ru.nightgoat.volunteer.ui.base.BaseFragment
 import javax.inject.Inject
 
@@ -35,7 +36,7 @@ class ChangeEmailFragment : BaseFragment() {
 
     private fun onBackBtnClickListener() {
         changeEmail_toolbar.setNavigationOnClickListener {
-            findNavController().popBackStack()
+            popBackStack()
         }
     }
 

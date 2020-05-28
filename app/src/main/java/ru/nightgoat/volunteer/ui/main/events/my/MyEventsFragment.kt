@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_events_my.*
 
 import ru.nightgoat.volunteer.R
+import ru.nightgoat.volunteer.extentions.popBackStack
 import ru.nightgoat.volunteer.ui.main.events.active.ActiveEventsListAdapter
 import javax.inject.Inject
 
@@ -40,7 +41,7 @@ class MyEventsFragment : Fragment() {
 
     private fun onBackBtnClickListener() {
         events_my_toolbar.setNavigationOnClickListener {
-            findNavController().popBackStack()
+            popBackStack()
         }
     }
 

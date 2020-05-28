@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 import kotlinx.android.synthetic.main.fragment_events_active.*
 import ru.nightgoat.volunteer.R
+import ru.nightgoat.volunteer.extentions.popBackStack
 import ru.nightgoat.volunteer.ui.base.BaseFragment
 import javax.inject.Inject
 
@@ -22,7 +24,7 @@ class ActiveEventsFragment : BaseFragment() {
         ViewModelProvider(this, viewModelFactory).get(ActiveEventsViewModel::class.java)
     }
 
-    private val listAdapter = ActiveEventsListAdapter(viewModelActive)
+    private lateinit var listAdapter : ActiveEventsListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,14 +41,14 @@ class ActiveEventsFragment : BaseFragment() {
 
     private fun onBackBtnClickListener() {
         events_active_toolbar.setNavigationOnClickListener {
-            findNavController().popBackStack()
+            popBackStack()
         }
     }
 
     private fun initRecycler() {
         events_active_recycler.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = listAdapter
+            adapter = ActiveEventsListAdapter(viewModelActive)
         }
     }
 

@@ -1,4 +1,4 @@
-package ru.nightgoat.weather.di.builder
+package ru.nightgoat.volunteer.di.builder
 
 import androidx.lifecycle.ViewModel
 import dagger.Binds

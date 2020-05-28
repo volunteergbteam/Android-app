@@ -11,6 +11,7 @@ import timber.log.Timber
 import java.net.UnknownHostException
 
 class App : DaggerApplication() {
+
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
         return DaggerAppComponent
             .builder()
@@ -21,6 +22,7 @@ class App : DaggerApplication() {
     override fun onCreate() {
         super.onCreate()
         JodaTimeAndroid.init(this)
+
         RxJavaPlugins.setErrorHandler { throwable ->
             if (throwable is UndeliverableException && throwable.cause is UnknownHostException) {
                 return@setErrorHandler // ignore BleExceptions as they were surely delivered at least once

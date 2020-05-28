@@ -1,5 +1,6 @@
 package ru.nightgoat.volunteer.ui.main.addEvent
 
+import android.location.Geocoder
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.frag_map_add_event.*
 
 import ru.nightgoat.volunteer.R
+import ru.nightgoat.volunteer.extentions.popBackStack
 import ru.nightgoat.volunteer.ui.base.BaseFragment
 import javax.inject.Inject
 
@@ -37,16 +39,18 @@ class AddEventFragment : BaseFragment() {
     private fun onSaveBtnClickListener() {
         addEvent_btn_save.setOnClickListener {
             saveEvent()
-            findNavController().popBackStack()
+            popBackStack()
         }
     }
 
     private fun saveEvent() {
+        val geocoder = Geocoder(context)
+
     }
 
     private fun onCancelBtnClickListener() {
         addEvent_toolbar.setNavigationOnClickListener {
-            findNavController().popBackStack()
+            popBackStack()
         }
     }
 

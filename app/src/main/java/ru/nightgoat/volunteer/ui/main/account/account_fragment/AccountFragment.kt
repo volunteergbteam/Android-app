@@ -1,6 +1,5 @@
 package ru.nightgoat.volunteer.ui.main.account.account_fragment
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,12 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import ru.nightgoat.volunteer.R
 
 import kotlinx.android.synthetic.main.frag_acc.*
+import ru.nightgoat.volunteer.extentions.navigateTo
 import ru.nightgoat.volunteer.ui.login.LoginActivity
 import ru.nightgoat.volunteer.ui.base.BaseFragment
-import java.util.*
 import javax.inject.Inject
 
 class AccountFragment : BaseFragment() {
@@ -25,6 +27,8 @@ class AccountFragment : BaseFragment() {
         ViewModelProvider(this, viewModelFactory).get(AccountViewModel::class.java)
     }
 
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -33,6 +37,12 @@ class AccountFragment : BaseFragment() {
         val root = inflater.inflate(R.layout.frag_acc, container, false)
         observeLiveData()
         return root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        auth = Firebase.auth
+        lifecycle.addObserver(viewModel)
     }
 
     private fun setUpToolbar() {
@@ -52,12 +62,11 @@ class AccountFragment : BaseFragment() {
     }
 
     private fun observeLiveData() {
-        viewModel.accountLiveData.observe(viewLifecycleOwner, Observer {
-            account_text_name.text = it.firstName.plus(" ").plus(it.secondName)
+        viewModel.userLiveData.observe(viewLifecycleOwner, Observer {
+            account_text_name.text = it.name
             account_text_email.text = it.email
-            account_text_city.text = it.city
+            account_text_city.text = resources.getStringArray(R.array.cities)[it.city]
             account_text_about.text = it.about
-            account_rating.rating = it.rating
         })
     }
 
@@ -81,11 +90,10 @@ class AccountFragment : BaseFragment() {
         }
     }
 
-
-
     private fun onExitBtnClickListener() {
         account_btn_exit.setOnClickListener {
             sharedPreferences.edit().putBoolean("logedIn", false).apply()
+            auth.signOut()
             activity?.let {
                 startActivity(Intent(it, LoginActivity::class.java))
             }

@@ -20,7 +20,8 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.frag_map.*
 import ru.nightgoat.volunteer.R
-import ru.nightgoat.volunteer.data.network.model.EventModel
+import ru.nightgoat.volunteer.data.model.EventModel
+import ru.nightgoat.volunteer.extentions.showShortToast
 import ru.nightgoat.volunteer.ui.base.BaseFragment
 import timber.log.Timber
 import javax.inject.Inject
@@ -30,7 +31,7 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    lateinit var eventsList: List<EventModel>
+    private lateinit var eventsList: List<EventModel>
 
     private val viewModel: MapViewModel by lazy {
         ViewModelProvider(this, viewModelFactory).get(MapViewModel::class.java)
@@ -61,6 +62,7 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
             map_view.getMapAsync(this)
             createLocationRequest()
             observeViewModel()
+            viewModel.subscribeToEvents()
         } else {
             ActivityCompat.requestPermissions(
                 requireActivity(), arrayOf(
@@ -73,15 +75,14 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
     }
 
     private fun observeViewModel() {
-        lifecycle.addObserver(viewModel)
         viewModel.eventsListLiveData.observe(viewLifecycleOwner, Observer { listOfEvents ->
             eventsList = listOfEvents
             for (i in listOfEvents.indices) {
-                Timber.tag(TAG).d(listOfEvents[i].id.toString())
+//                Timber.tag(TAG).d(listOfEvents[i].id.toString())
                 val marker = googleMap.addMarker(
                     MarkerOptions()
                         .position(
-                            LatLng(listOfEvents[i].locationLat, listOfEvents[i].locationLon)
+                            LatLng(listOfEvents[i].lat, listOfEvents[i].lon)
                         )
                         .title(listOfEvents[i].title)
                 )
@@ -175,7 +176,7 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
             googleMap.moveCamera(
                 CameraUpdateFactory
-                    .newLatLngZoom(LatLng(event.locationLat, event.locationLon), 15f)
+                    .newLatLngZoom(LatLng(event.lat, event.lon), 15f)
             )
             true
         } else false

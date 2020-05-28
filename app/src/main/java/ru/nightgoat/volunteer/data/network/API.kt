@@ -5,7 +5,7 @@ import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
-import ru.nightgoat.volunteer.data.network.model.LocationEventsModel
+import ru.nightgoat.volunteer.data.model.LocationEventsModel
 
 interface API {
 
