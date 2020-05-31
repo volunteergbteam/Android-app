@@ -11,6 +11,7 @@
         android:id="@+id/map_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_anchor="@id/map_bottom_sheet"
         />
 
     <EditText
@@ -32,43 +33,13 @@
         android:background="@drawable/map_search_edittext"
         android:importantForAutofill="no" />
 
-    <LinearLayout
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/map_bottom_sheet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         app:behavior_hideable="true"
-        app:behavior_peekHeight="0dp"
-        android:background="@android:color/white"
-        android:padding="16dp"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-        >
-
-        <TextView
-            android:id="@+id/map_bottom_sheet_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="24sp"
-            tools:text="Задача"/>
-
-        <TextView
-            android:id="@+id/map_bottom_sheet_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            tools:text="У моей бабушки кончился хлеб, а без него она отказывается есть!"
-            android:textSize="16sp"
-            />
-
-        <Button
-            android:id="@+id/map_bottom_sheet_btn_subscribe"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/help"
-            style="@style/Button"/>
-
-    </LinearLayout>
+        app:behavior_peekHeight="400dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/map_fab_getPosition"

@@ -1,6 +1,7 @@
 package ru.nightgoat.volunteer.di.components;
 
 import android.app.Application;
+import android.content.Context;
 import androidx.lifecycle.ViewModel;
 import dagger.android.AndroidInjector;
 import dagger.android.DaggerApplication_MembersInjector;
@@ -9,6 +10,7 @@ import dagger.android.DispatchingAndroidInjector_Factory;
 import dagger.android.support.DaggerAppCompatActivity_MembersInjector;
 import dagger.android.support.DaggerFragment_MembersInjector;
 import dagger.internal.DoubleCheck;
+import dagger.internal.InstanceFactory;
 import dagger.internal.MapBuilder;
 import dagger.internal.MapProviderFactory;
 import dagger.internal.Preconditions;
@@ -17,6 +19,8 @@ import java.util.Map;
 import javax.annotation.Generated;
 import javax.inject.Provider;
 import ru.nightgoat.volunteer.App;
+import ru.nightgoat.volunteer.data.locationRepo.LocationRepository;
+import ru.nightgoat.volunteer.data.locationRepo.LocationRepository_Factory;
 import ru.nightgoat.volunteer.di.builder.ActivityBuilder_BindLoginActivity;
 import ru.nightgoat.volunteer.di.builder.ActivityBuilder_BindMainActivity;
 import ru.nightgoat.volunteer.di.builder.LoginActivityProviders_ProvideLoginFragment;
@@ -30,9 +34,12 @@ import ru.nightgoat.volunteer.di.builder.MainActivityProviders_ProvideChangePass
 import ru.nightgoat.volunteer.di.builder.MainActivityProviders_ProvideChatFragment;
 import ru.nightgoat.volunteer.di.builder.MainActivityProviders_ProvideChatListFragment;
 import ru.nightgoat.volunteer.di.builder.MainActivityProviders_ProvideEditAccountFragment;
+import ru.nightgoat.volunteer.di.builder.MainActivityProviders_ProvideEventFragment;
 import ru.nightgoat.volunteer.di.builder.MainActivityProviders_ProvideMapFragment;
 import ru.nightgoat.volunteer.di.builder.MainActivityProviders_ProvideMyEventsFragment;
 import ru.nightgoat.volunteer.di.builder.MainActivityProviders_ProvideSettingsFragment;
+import ru.nightgoat.volunteer.di.modules.ContextModule;
+import ru.nightgoat.volunteer.di.modules.ContextModule_ProvideContextFactory;
 import ru.nightgoat.volunteer.di.modules.DataModule_ProvideFirebaseRepositoryFactory;
 import ru.nightgoat.volunteer.di.modules.InteractorModule_ProvideInteractorFactory;
 import ru.nightgoat.volunteer.domain.Interactor;
@@ -69,10 +76,6 @@ import ru.nightgoat.volunteer.ui.main.account.edit_account.EditAccountFragment;
 import ru.nightgoat.volunteer.ui.main.account.edit_account.EditAccountFragment_MembersInjector;
 import ru.nightgoat.volunteer.ui.main.account.edit_account.EditAccountViewModel;
 import ru.nightgoat.volunteer.ui.main.account.edit_account.EditAccountViewModel_Factory;
-import ru.nightgoat.volunteer.ui.main.addEvent.AddEventFragment;
-import ru.nightgoat.volunteer.ui.main.addEvent.AddEventFragment_MembersInjector;
-import ru.nightgoat.volunteer.ui.main.addEvent.AddEventViewModel;
-import ru.nightgoat.volunteer.ui.main.addEvent.AddEventViewModel_Factory;
 import ru.nightgoat.volunteer.ui.main.chat.chat.ChatFragment;
 import ru.nightgoat.volunteer.ui.main.chat.chat.ChatFragment_MembersInjector;
 import ru.nightgoat.volunteer.ui.main.chat.list.ChatListFragment;
@@ -91,6 +94,14 @@ import ru.nightgoat.volunteer.ui.main.map.MapFragment;
 import ru.nightgoat.volunteer.ui.main.map.MapFragment_MembersInjector;
 import ru.nightgoat.volunteer.ui.main.map.MapViewModel;
 import ru.nightgoat.volunteer.ui.main.map.MapViewModel_Factory;
+import ru.nightgoat.volunteer.ui.main.map.addEvent.AddEventFragment;
+import ru.nightgoat.volunteer.ui.main.map.addEvent.AddEventFragment_MembersInjector;
+import ru.nightgoat.volunteer.ui.main.map.addEvent.AddEventViewModel;
+import ru.nightgoat.volunteer.ui.main.map.addEvent.AddEventViewModel_Factory;
+import ru.nightgoat.volunteer.ui.main.map.event.EventFragment;
+import ru.nightgoat.volunteer.ui.main.map.event.EventFragment_MembersInjector;
+import ru.nightgoat.volunteer.ui.main.map.event.EventViewModel;
+import ru.nightgoat.volunteer.ui.main.map.event.EventViewModel_Factory;
 import ru.nightgoat.volunteer.ui.main.settings.SettingsFragment;
 
 @Generated(
@@ -108,6 +119,12 @@ public final class DaggerAppComponent implements AppComponent {
 
   private Provider<Repository> provideFirebaseRepositoryProvider;
 
+  private Provider<Application> applicationProvider;
+
+  private Provider<Context> provideContextProvider;
+
+  private Provider<LocationRepository> locationRepositoryProvider;
+
   private Provider<Interactor> provideInteractorProvider;
 
   private Provider<AccountViewModel> accountViewModelProvider;
@@ -119,6 +136,8 @@ public final class DaggerAppComponent implements AppComponent {
   private Provider<ChangePasswordViewModel> changePasswordViewModelProvider;
 
   private Provider<AddEventViewModel> addEventViewModelProvider;
+
+  private Provider<EventViewModel> eventViewModelProvider;
 
   private Provider<ChatListViewModel> chatListViewModelProvider;
 
@@ -138,9 +157,9 @@ public final class DaggerAppComponent implements AppComponent {
 
   private Provider<ViewModelFactory> viewModelFactoryProvider;
 
-  private DaggerAppComponent(Application application) {
+  private DaggerAppComponent(ContextModule contextModuleParam, Application applicationParam) {
 
-    initialize(application);
+    initialize(contextModuleParam, applicationParam);
   }
 
   public static AppComponent.Builder builder() {
@@ -155,7 +174,8 @@ public final class DaggerAppComponent implements AppComponent {
     return DispatchingAndroidInjector_Factory.newInstance(getMapOfClassOfAndProviderOfAndroidInjectorFactoryOf(), Collections.<String, Provider<AndroidInjector.Factory<?>>>emptyMap());}
 
   @SuppressWarnings("unchecked")
-  private void initialize(final Application application) {
+  private void initialize(final ContextModule contextModuleParam,
+      final Application applicationParam) {
     this.mainActivitySubcomponentFactoryProvider = new Provider<ActivityBuilder_BindMainActivity.MainActivitySubcomponent.Factory>() {
       @Override
       public ActivityBuilder_BindMainActivity.MainActivitySubcomponent.Factory get() {
@@ -167,12 +187,16 @@ public final class DaggerAppComponent implements AppComponent {
         return new LoginActivitySubcomponentFactory();}
     };
     this.provideFirebaseRepositoryProvider = DoubleCheck.provider(DataModule_ProvideFirebaseRepositoryFactory.create());
-    this.provideInteractorProvider = DoubleCheck.provider(InteractorModule_ProvideInteractorFactory.create(provideFirebaseRepositoryProvider));
+    this.applicationProvider = InstanceFactory.create(applicationParam);
+    this.provideContextProvider = DoubleCheck.provider(ContextModule_ProvideContextFactory.create(contextModuleParam, applicationProvider));
+    this.locationRepositoryProvider = LocationRepository_Factory.create(provideContextProvider);
+    this.provideInteractorProvider = DoubleCheck.provider(InteractorModule_ProvideInteractorFactory.create(provideFirebaseRepositoryProvider, locationRepositoryProvider));
     this.accountViewModelProvider = AccountViewModel_Factory.create(provideInteractorProvider);
     this.editAccountViewModelProvider = EditAccountViewModel_Factory.create(provideInteractorProvider);
     this.changeEmailViewModelProvider = ChangeEmailViewModel_Factory.create(provideInteractorProvider);
     this.changePasswordViewModelProvider = ChangePasswordViewModel_Factory.create(provideInteractorProvider);
     this.addEventViewModelProvider = AddEventViewModel_Factory.create(provideInteractorProvider);
+    this.eventViewModelProvider = EventViewModel_Factory.create(provideInteractorProvider);
     this.chatListViewModelProvider = ChatListViewModel_Factory.create(provideInteractorProvider);
     this.activeEventsViewModelProvider = ActiveEventsViewModel_Factory.create(provideInteractorProvider);
     this.myEventsViewModelProvider = MyEventsViewModel_Factory.create(provideInteractorProvider);
@@ -180,7 +204,7 @@ public final class DaggerAppComponent implements AppComponent {
     this.loginViewModelProvider = LoginViewModel_Factory.create(provideInteractorProvider);
     this.passwordRecoverViewModelProvider = PasswordRecoverViewModel_Factory.create(provideInteractorProvider);
     this.registerViewModelProvider = RegisterViewModel_Factory.create(provideInteractorProvider);
-    this.mapOfClassOfAndProviderOfViewModelProvider = MapProviderFactory.<Class<? extends ViewModel>, ViewModel>builder(12).put(AccountViewModel.class, (Provider) accountViewModelProvider).put(EditAccountViewModel.class, (Provider) editAccountViewModelProvider).put(ChangeEmailViewModel.class, (Provider) changeEmailViewModelProvider).put(ChangePasswordViewModel.class, (Provider) changePasswordViewModelProvider).put(AddEventViewModel.class, (Provider) addEventViewModelProvider).put(ChatListViewModel.class, (Provider) chatListViewModelProvider).put(ActiveEventsViewModel.class, (Provider) activeEventsViewModelProvider).put(MyEventsViewModel.class, (Provider) myEventsViewModelProvider).put(MapViewModel.class, (Provider) mapViewModelProvider).put(LoginViewModel.class, (Provider) loginViewModelProvider).put(PasswordRecoverViewModel.class, (Provider) passwordRecoverViewModelProvider).put(RegisterViewModel.class, (Provider) registerViewModelProvider).build();
+    this.mapOfClassOfAndProviderOfViewModelProvider = MapProviderFactory.<Class<? extends ViewModel>, ViewModel>builder(13).put(AccountViewModel.class, (Provider) accountViewModelProvider).put(EditAccountViewModel.class, (Provider) editAccountViewModelProvider).put(ChangeEmailViewModel.class, (Provider) changeEmailViewModelProvider).put(ChangePasswordViewModel.class, (Provider) changePasswordViewModelProvider).put(AddEventViewModel.class, (Provider) addEventViewModelProvider).put(EventViewModel.class, (Provider) eventViewModelProvider).put(ChatListViewModel.class, (Provider) chatListViewModelProvider).put(ActiveEventsViewModel.class, (Provider) activeEventsViewModelProvider).put(MyEventsViewModel.class, (Provider) myEventsViewModelProvider).put(MapViewModel.class, (Provider) mapViewModelProvider).put(LoginViewModel.class, (Provider) loginViewModelProvider).put(PasswordRecoverViewModel.class, (Provider) passwordRecoverViewModelProvider).put(RegisterViewModel.class, (Provider) registerViewModelProvider).build();
     this.viewModelFactoryProvider = DoubleCheck.provider(ViewModelFactory_Factory.create(mapOfClassOfAndProviderOfViewModelProvider));
   }
 
@@ -205,7 +229,7 @@ public final class DaggerAppComponent implements AppComponent {
     @Override
     public AppComponent build() {
       Preconditions.checkBuilderRequirement(application, Application.class);
-      return new DaggerAppComponent(application);
+      return new DaggerAppComponent(new ContextModule(), application);
     }
   }
 
@@ -228,6 +252,8 @@ public final class DaggerAppComponent implements AppComponent {
 
     private Provider<MainActivityProviders_ProvideAddEventFragment.AddEventFragmentSubcomponent.Factory> addEventFragmentSubcomponentFactoryProvider;
 
+    private Provider<MainActivityProviders_ProvideEventFragment.EventFragmentSubcomponent.Factory> eventFragmentSubcomponentFactoryProvider;
+
     private Provider<MainActivityProviders_ProvideChatFragment.ChatFragmentSubcomponent.Factory> chatFragmentSubcomponentFactoryProvider;
 
     private Provider<MainActivityProviders_ProvideChatListFragment.ChatListFragmentSubcomponent.Factory> chatListFragmentSubcomponentFactoryProvider;
@@ -247,7 +273,7 @@ public final class DaggerAppComponent implements AppComponent {
 
     private Map<Class<?>, Provider<AndroidInjector.Factory<?>>> getMapOfClassOfAndProviderOfAndroidInjectorFactoryOf(
         ) {
-      return MapBuilder.<Class<?>, Provider<AndroidInjector.Factory<?>>>newMapBuilder(13).put(MainActivity.class, (Provider) DaggerAppComponent.this.mainActivitySubcomponentFactoryProvider).put(LoginActivity.class, (Provider) DaggerAppComponent.this.loginActivitySubcomponentFactoryProvider).put(AccountFragment.class, (Provider) accountFragmentSubcomponentFactoryProvider).put(EditAccountFragment.class, (Provider) editAccountFragmentSubcomponentFactoryProvider).put(ChangeEmailFragment.class, (Provider) changeEmailFragmentSubcomponentFactoryProvider).put(ChangePasswordFragment.class, (Provider) changePasswordFragmentSubcomponentFactoryProvider).put(AddEventFragment.class, (Provider) addEventFragmentSubcomponentFactoryProvider).put(ChatFragment.class, (Provider) chatFragmentSubcomponentFactoryProvider).put(ChatListFragment.class, (Provider) chatListFragmentSubcomponentFactoryProvider).put(ActiveEventsFragment.class, (Provider) activeEventsFragmentSubcomponentFactoryProvider).put(MyEventsFragment.class, (Provider) myEventsFragmentSubcomponentFactoryProvider).put(MapFragment.class, (Provider) mapFragmentSubcomponentFactoryProvider).put(SettingsFragment.class, (Provider) settingsFragmentSubcomponentFactoryProvider).build();}
+      return MapBuilder.<Class<?>, Provider<AndroidInjector.Factory<?>>>newMapBuilder(14).put(MainActivity.class, (Provider) DaggerAppComponent.this.mainActivitySubcomponentFactoryProvider).put(LoginActivity.class, (Provider) DaggerAppComponent.this.loginActivitySubcomponentFactoryProvider).put(AccountFragment.class, (Provider) accountFragmentSubcomponentFactoryProvider).put(EditAccountFragment.class, (Provider) editAccountFragmentSubcomponentFactoryProvider).put(ChangeEmailFragment.class, (Provider) changeEmailFragmentSubcomponentFactoryProvider).put(ChangePasswordFragment.class, (Provider) changePasswordFragmentSubcomponentFactoryProvider).put(AddEventFragment.class, (Provider) addEventFragmentSubcomponentFactoryProvider).put(EventFragment.class, (Provider) eventFragmentSubcomponentFactoryProvider).put(ChatFragment.class, (Provider) chatFragmentSubcomponentFactoryProvider).put(ChatListFragment.class, (Provider) chatListFragmentSubcomponentFactoryProvider).put(ActiveEventsFragment.class, (Provider) activeEventsFragmentSubcomponentFactoryProvider).put(MyEventsFragment.class, (Provider) myEventsFragmentSubcomponentFactoryProvider).put(MapFragment.class, (Provider) mapFragmentSubcomponentFactoryProvider).put(SettingsFragment.class, (Provider) settingsFragmentSubcomponentFactoryProvider).build();}
 
     private DispatchingAndroidInjector<Object> getDispatchingAndroidInjectorOfObject() {
       return DispatchingAndroidInjector_Factory.newInstance(getMapOfClassOfAndProviderOfAndroidInjectorFactoryOf(), Collections.<String, Provider<AndroidInjector.Factory<?>>>emptyMap());}
@@ -283,6 +309,11 @@ public final class DaggerAppComponent implements AppComponent {
         public MainActivityProviders_ProvideAddEventFragment.AddEventFragmentSubcomponent.Factory get(
             ) {
           return new AddEventFragmentSubcomponentFactory();}
+      };
+      this.eventFragmentSubcomponentFactoryProvider = new Provider<MainActivityProviders_ProvideEventFragment.EventFragmentSubcomponent.Factory>() {
+        @Override
+        public MainActivityProviders_ProvideEventFragment.EventFragmentSubcomponent.Factory get() {
+          return new EventFragmentSubcomponentFactory();}
       };
       this.chatFragmentSubcomponentFactoryProvider = new Provider<MainActivityProviders_ProvideChatFragment.ChatFragmentSubcomponent.Factory>() {
         @Override
@@ -450,6 +481,31 @@ public final class DaggerAppComponent implements AppComponent {
       private AddEventFragment injectAddEventFragment(AddEventFragment instance) {
         DaggerFragment_MembersInjector.injectAndroidInjector(instance, MainActivitySubcomponentImpl.this.getDispatchingAndroidInjectorOfObject());
         AddEventFragment_MembersInjector.injectViewModelFactory(instance, DaggerAppComponent.this.viewModelFactoryProvider.get());
+        return instance;
+      }
+    }
+
+    private final class EventFragmentSubcomponentFactory implements MainActivityProviders_ProvideEventFragment.EventFragmentSubcomponent.Factory {
+      @Override
+      public MainActivityProviders_ProvideEventFragment.EventFragmentSubcomponent create(
+          EventFragment arg0) {
+        Preconditions.checkNotNull(arg0);
+        return new EventFragmentSubcomponentImpl(arg0);
+      }
+    }
+
+    private final class EventFragmentSubcomponentImpl implements MainActivityProviders_ProvideEventFragment.EventFragmentSubcomponent {
+      private EventFragmentSubcomponentImpl(EventFragment arg0) {
+
+      }
+
+      @Override
+      public void inject(EventFragment arg0) {
+        injectEventFragment(arg0);}
+
+      private EventFragment injectEventFragment(EventFragment instance) {
+        DaggerFragment_MembersInjector.injectAndroidInjector(instance, MainActivitySubcomponentImpl.this.getDispatchingAndroidInjectorOfObject());
+        EventFragment_MembersInjector.injectViewModelFactory(instance, DaggerAppComponent.this.viewModelFactoryProvider.get());
         return instance;
       }
     }

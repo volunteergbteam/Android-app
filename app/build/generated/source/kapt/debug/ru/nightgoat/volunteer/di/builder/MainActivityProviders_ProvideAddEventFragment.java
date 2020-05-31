@@ -7,7 +7,7 @@ import dagger.android.AndroidInjector;
 import dagger.multibindings.ClassKey;
 import dagger.multibindings.IntoMap;
 import javax.annotation.Generated;
-import ru.nightgoat.volunteer.ui.main.addEvent.AddEventFragment;
+import ru.nightgoat.volunteer.ui.main.map.addEvent.AddEventFragment;
 
 @Module(
   subcomponents = MainActivityProviders_ProvideAddEventFragment.AddEventFragmentSubcomponent.class

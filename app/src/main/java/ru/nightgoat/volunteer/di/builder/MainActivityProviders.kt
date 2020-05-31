@@ -5,13 +5,14 @@ import dagger.android.ContributesAndroidInjector
 import ru.nightgoat.volunteer.ui.main.account.account_fragment.AccountFragment
 import ru.nightgoat.volunteer.ui.main.account.changeEmail.ChangeEmailFragment
 import ru.nightgoat.volunteer.ui.main.account.changePass.ChangePasswordFragment
-import ru.nightgoat.volunteer.ui.main.addEvent.AddEventFragment
+import ru.nightgoat.volunteer.ui.main.map.addEvent.AddEventFragment
 import ru.nightgoat.volunteer.ui.main.chat.chat.ChatFragment
 import ru.nightgoat.volunteer.ui.main.chat.list.ChatListFragment
 import ru.nightgoat.volunteer.ui.main.account.edit_account.EditAccountFragment
 import ru.nightgoat.volunteer.ui.main.events.active.ActiveEventsFragment
 import ru.nightgoat.volunteer.ui.main.events.my.MyEventsFragment
 import ru.nightgoat.volunteer.ui.main.map.MapFragment
+import ru.nightgoat.volunteer.ui.main.map.event.EventFragment
 import ru.nightgoat.volunteer.ui.main.settings.SettingsFragment
 
 @Module
@@ -31,6 +32,9 @@ abstract class MainActivityProviders {
 
     @ContributesAndroidInjector
     abstract fun provideAddEventFragment(): AddEventFragment
+
+    @ContributesAndroidInjector
+    abstract fun provideEventFragment(): EventFragment
 
     @ContributesAndroidInjector
     abstract fun provideChatFragment(): ChatFragment

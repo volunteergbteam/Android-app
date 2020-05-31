@@ -1,14 +1,10 @@
 package ru.nightgoat.volunteer.ui.main.map
 
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.OnLifecycleEvent
-import io.reactivex.android.schedulers.AndroidSchedulers
+import com.google.android.gms.maps.model.LatLng
 import ru.nightgoat.volunteer.data.model.EventModel
 import ru.nightgoat.volunteer.domain.Interactor
 import ru.nightgoat.volunteer.ui.base.BaseViewModel
-import timber.log.Timber
-import java.io.BufferedReader
 import javax.inject.Inject
 
 class MapViewModel @Inject constructor(private val interactor: Interactor) : BaseViewModel() {
@@ -16,9 +12,19 @@ class MapViewModel @Inject constructor(private val interactor: Interactor) : Bas
     val eventsListLiveData = MutableLiveData<List<EventModel>>()
     val toastLiveData = MutableLiveData<String>()
 
-    fun subscribeToEvents(){
+    fun subscribeToEventsByUser(){
         compositeDisposable.add(
-            interactor.getEvents().subscribe({
+            interactor.getEventsByUser().subscribe({
+                eventsListLiveData.value = it
+            }, {
+                toastLiveData.value = it.message
+            })
+        )
+    }
+
+    fun subscribeToEventsByGeo(){
+        compositeDisposable.add(
+            interactor.getEventsByGeo().subscribe({
                 eventsListLiveData.value = it
             }, {
                 toastLiveData.value = it.message

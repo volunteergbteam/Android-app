@@ -1,4 +1,4 @@
-package ru.nightgoat.volunteer.ui.main.addEvent;
+package ru.nightgoat.volunteer.ui.main.map.addEvent;
 
 import dagger.internal.Factory;
 import javax.annotation.Generated;

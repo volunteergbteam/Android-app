@@ -11,12 +11,13 @@ import ru.nightgoat.volunteer.ui.login.register.RegisterViewModel
 import ru.nightgoat.volunteer.ui.main.account.account_fragment.AccountViewModel
 import ru.nightgoat.volunteer.ui.main.account.changeEmail.ChangeEmailViewModel
 import ru.nightgoat.volunteer.ui.main.account.changePass.ChangePasswordViewModel
-import ru.nightgoat.volunteer.ui.main.addEvent.AddEventViewModel
+import ru.nightgoat.volunteer.ui.main.map.addEvent.AddEventViewModel
 import ru.nightgoat.volunteer.ui.main.chat.list.ChatListViewModel
 import ru.nightgoat.volunteer.ui.main.account.edit_account.EditAccountViewModel
 import ru.nightgoat.volunteer.ui.main.events.active.ActiveEventsViewModel
 import ru.nightgoat.volunteer.ui.main.events.my.MyEventsViewModel
 import ru.nightgoat.volunteer.ui.main.map.MapViewModel
+import ru.nightgoat.volunteer.ui.main.map.event.EventViewModel
 
 @Module
 abstract class ViewModelModule {
@@ -47,6 +48,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(AddEventViewModel::class)
     abstract fun bindAddEventViewModel(addEventViewModel: AddEventViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(EventViewModel::class)
+    abstract fun bindEventViewModel(EventViewModel: EventViewModel): ViewModel
 
     @Binds
     @IntoMap

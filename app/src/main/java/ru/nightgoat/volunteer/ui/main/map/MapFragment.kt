@@ -2,6 +2,7 @@ package ru.nightgoat.volunteer.ui.main.map
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,11 +10,11 @@ import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
@@ -23,15 +24,19 @@ import ru.nightgoat.volunteer.R
 import ru.nightgoat.volunteer.data.model.EventModel
 import ru.nightgoat.volunteer.extentions.showShortToast
 import ru.nightgoat.volunteer.ui.base.BaseFragment
+import ru.nightgoat.volunteer.ui.main.map.addEvent.AddEventFragment
+import ru.nightgoat.volunteer.ui.main.map.event.EventFragment
+import ru.nightgoat.volunteer.utils.descriptBitMap
 import timber.log.Timber
 import javax.inject.Inject
 
-class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener, MapMover {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var eventsList: List<EventModel>
+    private lateinit var markerLatLngGetter: MarkerLatLngGetter
 
     private val viewModel: MapViewModel by lazy {
         ViewModelProvider(this, viewModelFactory).get(MapViewModel::class.java)
@@ -42,6 +47,7 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
     private lateinit var currentCoord: LatLng
     private lateinit var locationRequest: LocationRequest
     private lateinit var locationCallback: LocationCallback
+    private lateinit var tempMarker : Marker
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,7 +68,8 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
             map_view.getMapAsync(this)
             createLocationRequest()
             observeViewModel()
-            viewModel.subscribeToEvents()
+            childFragmentManager.beginTransaction().add(R.id.map_bottom_sheet, EventFragment())
+            viewModel.subscribeToEventsByGeo()
         } else {
             ActivityCompat.requestPermissions(
                 requireActivity(), arrayOf(
@@ -78,13 +85,18 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
         viewModel.eventsListLiveData.observe(viewLifecycleOwner, Observer { listOfEvents ->
             eventsList = listOfEvents
             for (i in listOfEvents.indices) {
-//                Timber.tag(TAG).d(listOfEvents[i].id.toString())
+                val bitmap = when (eventsList[i].status) {
+                    1 -> descriptBitMap(R.drawable.orange_logo)
+                    2 -> descriptBitMap(R.drawable.fire)
+                    else -> descriptBitMap(R.drawable.green_logo)
+                }
                 val marker = googleMap.addMarker(
                     MarkerOptions()
                         .position(
                             LatLng(listOfEvents[i].lat, listOfEvents[i].lon)
                         )
                         .title(listOfEvents[i].title)
+                        .icon(bitmap)
                 )
                 marker.tag = i
             }
@@ -96,7 +108,13 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
 
     private fun onAddEventClickListener() {
         map_fab_add.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_map_to_navigation_addEvent)
+            val fragment = AddEventFragment.newInstance(this)
+            markerLatLngGetter = fragment
+            childFragmentManager.beginTransaction().replace(R.id.map_bottom_sheet,
+                fragment
+            ).commit()
+            val bottomSheetBehavior = BottomSheetBehavior.from(map_bottom_sheet)
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         }
     }
 
@@ -141,6 +159,14 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
             map_fab_getPosition.setOnClickListener {
                 getLocationAndZoom(15f)
             }
+            onMarkerDraggedListener()
+            onMapClickListener()
+        }
+    }
+
+    private fun onMapClickListener() {
+        googleMap.setOnMapClickListener {
+            if (this::tempMarker.isInitialized) tempMarker.remove()
         }
     }
 
@@ -168,10 +194,12 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
     }
 
     override fun onMarkerClick(p0: Marker?): Boolean {
-        return if (p0 != null) {
+        return if (p0 != null && p0.tag != -1) {
             val event = eventsList[p0.tag.toString().toInt()]
-            map_bottom_sheet_title.text = event.title
-            map_bottom_sheet_description.text = event.description
+            childFragmentManager
+                .beginTransaction()
+                .replace(R.id.map_bottom_sheet, EventFragment.newInstance(event))
+                .commit()
             val bottomSheetBehavior = BottomSheetBehavior.from(map_bottom_sheet)
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
             googleMap.moveCamera(
@@ -180,6 +208,34 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
             )
             true
         } else false
+    }
+
+    override fun moveMapTo(destination: LatLng) {
+        Timber.d("moveCamera to ${destination.describeContents()}")
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(destination, 15f))
+        tempMarker = googleMap.addMarker(
+            MarkerOptions()
+                .position(
+                    LatLng(destination.latitude, destination.longitude)
+                )
+                .draggable(true)
+        )
+        tempMarker.tag = -1
+    }
+
+    private fun onMarkerDraggedListener() {
+        googleMap.setOnMarkerDragListener(object : GoogleMap.OnMarkerDragListener {
+            override fun onMarkerDragEnd(p0: Marker?) {
+                p0?.position?.let{ markerLatLngGetter.getMarkerLatLng(it) }
+            }
+
+            override fun onMarkerDragStart(p0: Marker?) {
+            }
+
+            override fun onMarkerDrag(p0: Marker?) {
+
+            }
+        })
     }
 
 }

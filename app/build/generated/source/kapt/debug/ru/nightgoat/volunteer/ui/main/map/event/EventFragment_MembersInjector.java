@@ -1,4 +1,4 @@
-package ru.nightgoat.volunteer.ui.main.addEvent;
+package ru.nightgoat.volunteer.ui.main.map.event;
 
 import androidx.lifecycle.ViewModelProvider;
 import dagger.MembersInjector;
@@ -16,31 +16,31 @@ import javax.inject.Provider;
     "unchecked",
     "rawtypes"
 })
-public final class AddEventFragment_MembersInjector implements MembersInjector<AddEventFragment> {
+public final class EventFragment_MembersInjector implements MembersInjector<EventFragment> {
   private final Provider<DispatchingAndroidInjector<Object>> androidInjectorProvider;
 
   private final Provider<ViewModelProvider.Factory> viewModelFactoryProvider;
 
-  public AddEventFragment_MembersInjector(
+  public EventFragment_MembersInjector(
       Provider<DispatchingAndroidInjector<Object>> androidInjectorProvider,
       Provider<ViewModelProvider.Factory> viewModelFactoryProvider) {
     this.androidInjectorProvider = androidInjectorProvider;
     this.viewModelFactoryProvider = viewModelFactoryProvider;
   }
 
-  public static MembersInjector<AddEventFragment> create(
+  public static MembersInjector<EventFragment> create(
       Provider<DispatchingAndroidInjector<Object>> androidInjectorProvider,
       Provider<ViewModelProvider.Factory> viewModelFactoryProvider) {
-    return new AddEventFragment_MembersInjector(androidInjectorProvider, viewModelFactoryProvider);}
+    return new EventFragment_MembersInjector(androidInjectorProvider, viewModelFactoryProvider);}
 
   @Override
-  public void injectMembers(AddEventFragment instance) {
+  public void injectMembers(EventFragment instance) {
     DaggerFragment_MembersInjector.injectAndroidInjector(instance, androidInjectorProvider.get());
     injectViewModelFactory(instance, viewModelFactoryProvider.get());
   }
 
-  @InjectedFieldSignature("ru.nightgoat.volunteer.ui.main.addEvent.AddEventFragment.viewModelFactory")
-  public static void injectViewModelFactory(AddEventFragment instance,
+  @InjectedFieldSignature("ru.nightgoat.volunteer.ui.main.map.event.EventFragment.viewModelFactory")
+  public static void injectViewModelFactory(EventFragment instance,
       ViewModelProvider.Factory viewModelFactory) {
     instance.viewModelFactory = viewModelFactory;
   }

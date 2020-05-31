@@ -71,7 +71,7 @@
 
     <fragment
         android:id="@+id/navigation_addEvent"
-        android:name="ru.nightgoat.volunteer.ui.main.addEvent.AddEventFragment"
+        android:name="ru.nightgoat.volunteer.ui.main.map.addEvent.AddEventFragment"
         android:label="@string/add_event"
         tools:layout="@layout/frag_map_add_event" />
 
