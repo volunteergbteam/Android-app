@@ -14,8 +14,8 @@ class ChatListViewModel @Inject constructor(private val interactor: Interactor) 
         private val TAG = ChatListViewModel::class.java.name
     }
 
-    private val mutableLiveData = MutableLiveData<List<ChatRoom>>()
-    val liveData : LiveData<List<ChatRoom>> = mutableLiveData
+    private val mutableLiveData = MutableLiveData<ChatRoom>()
+    val liveData : LiveData<ChatRoom> = mutableLiveData
 
     fun getChatList(){
         compositeDisposable.add(

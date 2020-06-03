@@ -5,7 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@android:color/white"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingTop="24dp">
 
     <TextView
         android:id="@+id/frag_map_event_title"
@@ -22,12 +24,22 @@
         android:layout_marginTop="8dp"
         android:textSize="16sp" />
 
+    <TextView
+        android:id="@+id/frag_map_event_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:drawableStart="@drawable/ic_place_black_24dp"
+        android:drawablePadding="4dp"
+        tools:text="Санкт-Петербург, Невский пр. 1, 2"/>
+
+
     <Button
         android:id="@+id/frag_map_event_subscribe"
         style="@style/Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="@string/help" />
 
 </LinearLayout>

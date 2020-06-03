@@ -48,15 +48,15 @@ class Interactor(
             BiFunction<List<Area>, LatLng?, Int> { list, currentLocation ->
                 return@BiFunction countClosestArea(currentLocation, list).key!!.toInt()
             }).flatMapCompletable { locationId ->
-                repository.addEvent(
-                    title,
-                    description,
-                    latLng,
-                    whenEnds,
-                    locationId,
-                    status,
-                    address
-                )
+            repository.addEvent(
+                title,
+                description,
+                latLng,
+                whenEnds,
+                locationId,
+                status,
+                address
+            )
 
         }
     }
@@ -72,35 +72,35 @@ class Interactor(
         return closestArea
     }
 
-    fun searchLocation(address: String) : Single<LatLng> {
+    fun searchLocation(address: String): Single<LatLng> {
         return locationRepository.geocodeAndFindClosestLatLntFromString(address)
     }
 
-    fun geocodeAndFindAddressFromLatLng(latlng: LatLng) : Single<String> {
+    fun geocodeAndFindAddressFromLatLng(latlng: LatLng): Single<String> {
         return locationRepository.geocodeAndFindAddressFromLatLng(latlng)
     }
 
-    fun getChatList() : Flowable<List<ChatRoom>>{
+    fun getChatList(): Flowable<ChatRoom> {
         return repository.getChatList()
     }
 
-    fun getChatMessages(eventId: String) : Flowable<ChatMessage> {
+    fun getChatMessages(eventId: String): Flowable<ChatMessage> {
         return repository.getChatMessages(eventId)
     }
 
-    fun sendMessage(eventId: String, message: ChatMessage) : Completable {
+    fun sendMessage(eventId: String, message: ChatMessage): Completable {
         return repository.addChatMessage(eventId, message)
     }
 
-    fun getMyEvents() : Flowable<EventModel> {
+    fun getMyEvents(): Flowable<EventModel> {
         return repository.getMyEvents()
     }
 
-    fun getUser() : Single<User> {
+    fun getUser(): Single<User> {
         return repository.getUser()
     }
 
-    fun help() : Completable{
+    fun help(event: EventModel): Completable {
         return Completable.complete()
     }
 }

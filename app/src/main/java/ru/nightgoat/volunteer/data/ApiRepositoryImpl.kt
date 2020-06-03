@@ -17,6 +17,9 @@ import ru.nightgoat.volunteer.objects.ChatRoom
 class ApiRepositoryImpl(private val mDao: mDao, private val api: API) : Repository {
 
     private val errorThrowable = Exception("This repository not implemented!")
+    override fun getEvent(city: Int, eventId: String): Single<EventModel> {
+        throw errorThrowable
+    }
 
     override fun getEvents(locationId: Int) : Flowable<List<EventModel>> {
         throw errorThrowable
@@ -58,7 +61,7 @@ class ApiRepositoryImpl(private val mDao: mDao, private val api: API) : Reposito
         throw errorThrowable
     }
 
-    override fun getChatList(): Flowable<List<ChatRoom>> {
+    override fun getChatList(): Flowable<ChatRoom> {
         throw errorThrowable
     }
 

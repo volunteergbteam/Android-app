@@ -1,9 +1,11 @@
 package ru.nightgoat.volunteer.data.model
 
-import com.google.firebase.database.Exclude
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
-data class EventModel (
-    val id: String = "",
+@Parcelize
+data class EventModel(
+    var id: String? = "",
     val title: String? = "",
     val description: String? = "",
     val status: Int? = 0,
@@ -14,4 +16,4 @@ data class EventModel (
     val lon: Double = 0.0,
     val priority: Int? = 0,
     val address: String? = ""
-)
+) : Parcelable

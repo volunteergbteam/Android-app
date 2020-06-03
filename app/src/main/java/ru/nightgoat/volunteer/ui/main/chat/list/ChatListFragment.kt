@@ -47,8 +47,11 @@ class ChatListFragment : BaseFragment() {
     }
 
     private fun observeViewModel() {
+        var count = 0
         viewModel.liveData.observe(viewLifecycleOwner, Observer {
-            groupAdapter.addAll(it.toChatRoomItem())
+            Timber.e("${++count}")
+            groupAdapter.add(it.toChatRoomItem())
+            chat_list_recycler.scrollToPosition(groupAdapter.itemCount - 1)
         })
     }
 
@@ -59,17 +62,16 @@ class ChatListFragment : BaseFragment() {
         }
     }
 
-    private fun List<ChatRoom>.toChatRoomItem() : List<ChatRoomItem> {
-        return this.map { chatRoom ->
-            ChatRoomItem(chatRoom)
-        }
+    private fun ChatRoom.toChatRoomItem() : ChatRoomItem {
+        return ChatRoomItem(this)
+
     }
 
     private fun onChatItemClickListener() {
         groupAdapter.setOnItemClickListener { item, view ->
             (item as? ChatRoomItem)?.let {
                 val bundle = Bundle()
-                bundle.putString("eventId", it.getChatRoomEventId())
+                bundle.putParcelable("event", it.getChatRoomEvent())
                 navigateTo(R.id.action_navigation_chat_list_to_navigation_chat, bundle)
             }
         }

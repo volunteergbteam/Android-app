@@ -2,7 +2,6 @@ package ru.nightgoat.volunteer.ui.main.map
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +13,6 @@ import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
@@ -22,6 +20,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.frag_map.*
 import ru.nightgoat.volunteer.R
 import ru.nightgoat.volunteer.data.model.EventModel
+import ru.nightgoat.volunteer.extentions.navigateTo
 import ru.nightgoat.volunteer.extentions.showShortToast
 import ru.nightgoat.volunteer.ui.base.BaseFragment
 import ru.nightgoat.volunteer.ui.main.map.addEvent.AddEventFragment
@@ -30,7 +29,7 @@ import ru.nightgoat.volunteer.utils.descriptBitMap
 import timber.log.Timber
 import javax.inject.Inject
 
-class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener, MapMover {
+class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener, ParentFragment {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -184,9 +183,9 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
             googleMap.isMyLocationEnabled = true
             googleMap.setOnMarkerClickListener(this)
             getLocationAndZoom(10f)
-            map_fab_getPosition.setOnClickListener {
-                getLocationAndZoom(15f)
-            }
+//            map_fab_getPosition.setOnClickListener {
+//                getLocationAndZoom(15f)
+//            }
             onMarkerDraggedListener()
             onMapClickListener()
         }
@@ -237,7 +236,7 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
             val event = eventsList[p0.tag.toString().toInt()]
             childFragmentManager
                 .beginTransaction()
-                .replace(R.id.map_bottom_sheet, EventFragment.newInstance(event))
+                .replace(R.id.map_bottom_sheet, EventFragment.newInstance(event, this))
                 .commit()
             val bottomSheetBehavior = BottomSheetBehavior.from(map_bottom_sheet)
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
@@ -265,6 +264,12 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
     override fun closeBottomPanel() {
         val bottomSheetBehavior = BottomSheetBehavior.from(map_bottom_sheet)
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+    }
+
+    override fun goToChat(event: EventModel) {
+        val bundle = Bundle()
+        bundle.putParcelable("event", event)
+        navigateTo(R.id.action_navigation_map_to_navigation_chat, bundle)
     }
 
     private fun onMarkerDraggedListener() {

@@ -12,6 +12,7 @@ import ru.nightgoat.volunteer.objects.ChatRoom
 
 interface Repository {
 
+    fun getEvent(city: Int, eventId: String) : Single<EventModel>
     fun getEvents(locationId: Int) : Flowable<List<EventModel>>
     fun getMyEvents() : Flowable<EventModel>
 
@@ -34,7 +35,7 @@ interface Repository {
     ) : Completable
 
     fun getAreas() : Single<List<Area>>
-    fun getChatList() : Flowable<List<ChatRoom>>
+    fun getChatList() : Flowable<ChatRoom>
     fun getChatMessages(eventId: String) : Flowable<ChatMessage>
     fun addChatMessage(eventId: String, message : ChatMessage) : Completable
 }

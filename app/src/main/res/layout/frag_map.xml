@@ -14,53 +14,54 @@
         app:layout_anchor="@id/map_bottom_sheet"
         />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/search"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_margin="16dp"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp"
-        android:inputType="text"
-        android:imeOptions="actionSearch"
-        android:drawablePadding="8dp"
-        android:drawableStart="@drawable/ic_search_black_24dp"
-        android:drawableEnd="@drawable/ic_filter_list_black_24dp"
-        android:background="@drawable/map_search_edittext"
-        android:importantForAutofill="no" />
+<!--    <EditText-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:hint="@string/search"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        android:layout_margin="16dp"-->
+<!--        android:paddingStart="16dp"-->
+<!--        android:paddingEnd="16dp"-->
+<!--        android:paddingTop="12dp"-->
+<!--        android:paddingBottom="12dp"-->
+<!--        android:inputType="text"-->
+<!--        android:imeOptions="actionSearch"-->
+<!--        android:drawablePadding="8dp"-->
+<!--        android:drawableStart="@drawable/ic_search_black_24dp"-->
+<!--        android:drawableEnd="@drawable/ic_filter_list_black_24dp"-->
+<!--        android:background="@drawable/map_search_edittext"-->
+<!--        android:importantForAutofill="no" />-->
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/map_bottom_sheet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:behavior_hideable="true"
-        app:behavior_peekHeight="400dp"
+        app:behavior_peekHeight="0dp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/map_fab_getPosition"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:backgroundTint="@android:color/white"
-        android:src="@drawable/ic_my_location_black_24dp"
-        app:layout_anchor="@id/map_bottom_sheet"
-        app:layout_anchorGravity="top|end"
-        android:layout_margin="16dp"
-        />
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/map_fab_getPosition"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:backgroundTint="@android:color/white"-->
+<!--        android:src="@drawable/ic_my_location_black_24dp"-->
+<!--        app:layout_anchor="@id/map_bottom_sheet"-->
+<!--        app:layout_anchorGravity="top|end"-->
+<!--        android:layout_margin="16dp"-->
+<!--        />-->
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/map_fab_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:backgroundTint="@android:color/white"
         android:src="@drawable/ic_add_black_24dp"
-        app:layout_anchor="@id/map_fab_getPosition"
-        app:layout_anchorGravity="end"
+        app:layout_anchor="@id/map_bottom_sheet"
+        app:layout_anchorGravity="top|end"
         android:layout_gravity="top"
-        android:layout_marginBottom="85dp"
+        android:layout_margin="16dp"
         />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

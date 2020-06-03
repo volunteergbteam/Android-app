@@ -22,10 +22,10 @@ class MyEventsViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         itemView.item_events_my_text_description.text = event.description
         itemView.item_events_my_text_address.text = event.address
         itemView.item_events_my_btn_check_completed.setOnClickListener {
-            clickListener.onCheckCompletedBtnClickListener(event.id)
+            clickListener.onCheckCompletedBtnClickListener(event.id!!)
         }
         itemView.item_events_my_btn_delete.setOnClickListener {
-            clickListener.onCancelBtnClickListener(event.id)
+            clickListener.onCancelBtnClickListener(event.id!!)
         }
     }
 }

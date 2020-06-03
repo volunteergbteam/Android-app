@@ -51,7 +51,7 @@ class LoginFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
             activity?.moveTaskToBack(true)
         }
         onLoginBtnClickListener()
@@ -62,7 +62,7 @@ class LoginFragment : BaseFragment() {
     private fun updateUi(user: FirebaseUser?) {
         login_progressBar?.visibility = View.INVISIBLE
         if (user != null && user.isEmailVerified){
-            startActivity(Intent(activity, MainActivity::class.java))
+            startActivity(Intent(activity, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
         }
     }
 

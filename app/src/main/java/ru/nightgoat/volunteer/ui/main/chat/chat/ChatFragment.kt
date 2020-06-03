@@ -13,8 +13,11 @@ import com.google.firebase.ktx.Firebase
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import kotlinx.android.synthetic.main.fragment_chat.*
+import kotlinx.android.synthetic.main.item_chat_list.*
 
 import ru.nightgoat.volunteer.R
+import ru.nightgoat.volunteer.data.model.EventModel
+import ru.nightgoat.volunteer.extentions.popBackStack
 import ru.nightgoat.volunteer.objects.ChatMessage
 import ru.nightgoat.volunteer.ui.base.BaseFragment
 import ru.nightgoat.volunteer.utils.USERS
@@ -31,8 +34,13 @@ class ChatFragment : BaseFragment() {
     }
 
     private val groupAdapter = GroupAdapter<GroupieViewHolder>()
-    private val eventId : String by lazy {
-        requireArguments().getString("eventId")!!
+
+//    private val eventId : String by lazy {
+//        requireArguments().getString("eventId")!!
+//    }
+
+    private val event : EventModel by lazy {
+        requireArguments().getParcelable<EventModel>("event")!!
     }
 
     override fun onCreateView(
@@ -47,8 +55,21 @@ class ChatFragment : BaseFragment() {
         viewModel.getUser()
         initRecycler()
         observeViewModel()
-        viewModel.listenToMessages(eventId)
+        initToolbar()
+        viewModel.listenToMessages(event.id!!)
         onSendBtnClickListener()
+    }
+
+    private fun initToolbar() {
+        val event = requireArguments().getParcelable<EventModel>("event")
+        event?.let {
+            chat_toolbar.title = it.title
+            chat_toolbar.subtitle = it.address
+        }
+        chat_toolbar.setNavigationOnClickListener {
+            popBackStack()
+        }
+
     }
 
 
@@ -56,7 +77,7 @@ class ChatFragment : BaseFragment() {
         chat_btn_send.setOnClickListener {
             chat_edit_input.text.apply {
                 if (isNotEmpty()) {
-                    viewModel.sendMessage(eventId, this.toString())
+                    viewModel.sendMessage(event.id!!, this.toString())
                     clear()
                 }
             }

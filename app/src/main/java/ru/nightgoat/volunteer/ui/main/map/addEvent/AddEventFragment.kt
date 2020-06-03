@@ -2,32 +2,23 @@ package ru.nightgoat.volunteer.ui.main.map.addEvent
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
-import android.location.Geocoder
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
-import com.google.firebase.database.ktx.database
 import kotlinx.android.synthetic.main.frag_map_add_event.*
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 
 import ru.nightgoat.volunteer.R
-import ru.nightgoat.volunteer.extentions.popBackStack
-import ru.nightgoat.volunteer.extentions.showShortToast
 import ru.nightgoat.volunteer.ui.base.BaseFragment
-import ru.nightgoat.volunteer.ui.main.map.MapMover
+import ru.nightgoat.volunteer.ui.main.map.ParentFragment
 import ru.nightgoat.volunteer.ui.main.map.MarkerLatLngGetter
 import timber.log.Timber
-import java.time.format.DateTimeFormatter
 import java.util.*
 import javax.inject.Inject
 
@@ -35,7 +26,7 @@ import javax.inject.Inject
 class AddEventFragment : BaseFragment(), MarkerLatLngGetter {
 
     companion object {
-        fun newInstance(mapFragment: MapMover) = AddEventFragment().apply {
+        fun newInstance(mapFragment: ParentFragment) = AddEventFragment().apply {
             mapMover = mapFragment
         }
     }
@@ -47,7 +38,7 @@ class AddEventFragment : BaseFragment(), MarkerLatLngGetter {
     private var isDescriptionNotEmpty = false
     private var description = ""
     private var doEventUntil: String = ""
-    private lateinit var mapMover: MapMover
+    private lateinit var mapMover: ParentFragment
 
     private val viewModel: AddEventViewModel by lazy {
         ViewModelProvider(this, viewModelFactory).get(AddEventViewModel::class.java)

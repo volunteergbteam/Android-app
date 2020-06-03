@@ -1,5 +1,6 @@
 package ru.nightgoat.volunteer.data.firebase
 
+import android.util.EventLog
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
@@ -26,6 +27,20 @@ class FirebaseDB : Repository {
         val TAG = FirebaseDB::class.java.name
     }
 
+    override fun getEvent(city: Int, eventId: String) : Single<EventModel> {
+        val reference = database.child(EVENTS).child(city.toString()).child(eventId)
+        return Single.create { emitter ->
+            reference.addListenerForSingleValueEvent(object : ValueEventListener{
+                override fun onCancelled(p0: DatabaseError) {
+                    emitter.onError(p0.toException())
+                }
+                override fun onDataChange(p0: DataSnapshot) {
+                    p0.getValue<EventModel>()?.let { emitter.onSuccess(it) }
+                }
+            })
+        }
+    }
+
     override fun getEvents(locationId: Int): Flowable<List<EventModel>> {
         val eventsReference = database.child(EVENTS).child(locationId.toString())
         return Flowable.create({ emitter ->
@@ -36,8 +51,8 @@ class FirebaseDB : Repository {
 
                 override fun onDataChange(p0: DataSnapshot) {
                     val list = mutableListOf<EventModel>()
-                    for (datasnapshot in p0.children) {
-                        val event = datasnapshot.getValue<EventModel>()
+                    for (dataSnapshot in p0.children) {
+                        val event = dataSnapshot.getValue<EventModel>()
                         event?.let {
                             list.add(event)
                         }
@@ -115,10 +130,11 @@ class FirebaseDB : Repository {
     }
 
     //Caution! This method gets specific chat room for example purposes!
-    override fun getChatList(): Flowable<List<ChatRoom>> {
+    override fun getChatList(): Flowable<ChatRoom> {
+        val city = "city1"
         Timber.tag("FirebaseDB").d("getChatList call")
         return Flowable.create({ emitter ->
-            val reference = database.child(CHATS).child("city1")
+            val reference = database.child(CHATS).child(city)
             val valueEventListener = object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
                     emitter.onError(p0.toException())
@@ -128,9 +144,11 @@ class FirebaseDB : Repository {
                     hashMapOfChatRooms?.let {
                         Timber.tag("FirebaseDB").d(it.toString())
                         for (map in it.asIterable()) {
-                            map.value.event = map.key
+                            val chatRoom = map.value
+                            chatRoom.city = city.drop(4).toInt()
+                            chatRoom.event = EventModel(id = map.key)
+                            emitter.onNext(chatRoom)
                         }
-                        emitter.onNext(it.values.toList())
                     }
                 }
             }
