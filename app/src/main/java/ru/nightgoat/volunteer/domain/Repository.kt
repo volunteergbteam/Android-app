@@ -7,10 +7,13 @@ import io.reactivex.Single
 import ru.nightgoat.volunteer.data.model.Area
 import ru.nightgoat.volunteer.data.model.EventModel
 import ru.nightgoat.volunteer.data.model.User
+import ru.nightgoat.volunteer.objects.ChatMessage
+import ru.nightgoat.volunteer.objects.ChatRoom
 
 interface Repository {
 
     fun getEvents(locationId: Int) : Flowable<List<EventModel>>
+    fun getMyEvents() : Flowable<EventModel>
 
     fun addUserToDatabase(user: User) : Completable
 
@@ -26,9 +29,12 @@ interface Repository {
         latLng: LatLng,
         whenEnds: Long,
         city: Int,
-        eventsSize: Int,
-        status: Int
+        status: Int,
+        address: String
     ) : Completable
 
     fun getAreas() : Single<List<Area>>
+    fun getChatList() : Flowable<List<ChatRoom>>
+    fun getChatMessages(eventId: String) : Flowable<ChatMessage>
+    fun addChatMessage(eventId: String, message : ChatMessage) : Completable
 }

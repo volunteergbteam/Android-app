@@ -1,39 +1,45 @@
 package ru.nightgoat.volunteer.data
 
+import android.location.Address
 import com.google.android.gms.maps.model.LatLng
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
 import ru.nightgoat.volunteer.data.db.mDao
 import ru.nightgoat.volunteer.data.model.Area
 import ru.nightgoat.volunteer.domain.Repository
 import ru.nightgoat.volunteer.data.network.API
 import ru.nightgoat.volunteer.data.model.EventModel
 import ru.nightgoat.volunteer.data.model.User
+import ru.nightgoat.volunteer.objects.ChatMessage
+import ru.nightgoat.volunteer.objects.ChatRoom
 
 class ApiRepositoryImpl(private val mDao: mDao, private val api: API) : Repository {
+
+    private val errorThrowable = Exception("This repository not implemented!")
+
     override fun getEvents(locationId: Int) : Flowable<List<EventModel>> {
-        return api.getEventsForCity(locationId)
-            .subscribeOn(Schedulers.io())
-            .map { it.eventsList }
-            .toFlowable()
+        throw errorThrowable
+    }
+
+    override fun getMyEvents(): Flowable<EventModel> {
+        throw errorThrowable
     }
 
     override fun addUserToDatabase(user: User): Completable {
-        return Completable.error(Throwable("This repository not implemented!"))
+        throw errorThrowable
     }
 
     override fun createUser(email: String, password: String): Completable {
-        return Completable.error(Throwable("This repository not implemented!"))
+        throw errorThrowable
     }
 
     override fun sendConfirmationEmail(): Completable {
-        return Completable.error(Throwable("This repository not implemented!"))
+        throw errorThrowable
     }
 
     override fun getUser(): Single<User> {
-        return Single.error(Throwable("This repository not implemented!"))
+        throw errorThrowable
     }
 
     override fun addEvent(
@@ -42,15 +48,26 @@ class ApiRepositoryImpl(private val mDao: mDao, private val api: API) : Reposito
         latLng: LatLng,
         whenEnds: Long,
         city: Int,
-        eventsSize: Int,
-        status: Int
+        status: Int,
+        address: String
     ): Completable {
-        return Completable.error(Throwable("This repository not implemented!"))
-
+        throw errorThrowable
     }
 
     override fun getAreas(): Single<List<Area>> {
-        return Single.error(Throwable("This repository not implemented!"))
+        throw errorThrowable
+    }
+
+    override fun getChatList(): Flowable<List<ChatRoom>> {
+        throw errorThrowable
+    }
+
+    override fun getChatMessages(eventId: String): Flowable<ChatMessage> {
+        throw errorThrowable
+    }
+
+    override fun addChatMessage(eventId: String, message: ChatMessage): Completable {
+        throw errorThrowable
     }
 
 }

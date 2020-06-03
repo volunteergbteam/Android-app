@@ -21,7 +21,6 @@ import javax.inject.Inject
 class AccountViewModel @Inject constructor(private val interactor: Interactor) : BaseViewModel() {
 
     private lateinit var auth: FirebaseAuth
-    private lateinit var user : User
 
     private val accountMutableLiveData = MutableLiveData<User>()
 

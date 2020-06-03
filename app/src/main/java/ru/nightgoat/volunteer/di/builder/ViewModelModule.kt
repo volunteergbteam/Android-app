@@ -14,6 +14,7 @@ import ru.nightgoat.volunteer.ui.main.account.changePass.ChangePasswordViewModel
 import ru.nightgoat.volunteer.ui.main.map.addEvent.AddEventViewModel
 import ru.nightgoat.volunteer.ui.main.chat.list.ChatListViewModel
 import ru.nightgoat.volunteer.ui.main.account.edit_account.EditAccountViewModel
+import ru.nightgoat.volunteer.ui.main.chat.chat.ChatViewModel
 import ru.nightgoat.volunteer.ui.main.events.active.ActiveEventsViewModel
 import ru.nightgoat.volunteer.ui.main.events.my.MyEventsViewModel
 import ru.nightgoat.volunteer.ui.main.map.MapViewModel
@@ -58,6 +59,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(ChatListViewModel::class)
     abstract fun bindChatListViewModel(chatListViewModel: ChatListViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ChatViewModel::class)
+    abstract fun bindChatViewModel(chatViewModel: ChatViewModel): ViewModel
 
 
     @Binds

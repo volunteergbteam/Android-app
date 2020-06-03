@@ -85,6 +85,7 @@ class AddEventFragment : BaseFragment(), MarkerLatLngGetter {
                     addEvent_edit_description.setText("До $doEventUntil: $description")
                 }, currentYear, currentMonth, currentDay)
             datePickerDialog.show()
+
         }
     }
 
@@ -98,12 +99,14 @@ class AddEventFragment : BaseFragment(), MarkerLatLngGetter {
     private fun saveEvent() {
         val title = addEvent_edit_header.text.toString()
         val description = addEvent_edit_description.text.toString()
+        val address = addEvent_edit_address.text.toString()
         val checkedId = addEvent_radio_group.indexOfChild(
             addEvent_radio_group.findViewById(
                 addEvent_radio_group.checkedRadioButtonId
             )
         )
-        viewModel.addEvent(title, description, latlng, dateToLong(doEventUntil), checkedId)
+        viewModel.addEvent(title, description, latlng, dateToLong(doEventUntil), checkedId, address)
+        mapMover.closeBottomPanel()
     }
 
     private fun dateToLong(date: String): Long {

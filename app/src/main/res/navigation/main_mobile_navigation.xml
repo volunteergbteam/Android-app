@@ -83,7 +83,7 @@
 
     <fragment
         android:id="@+id/navigation_events_my"
-        android:name="ru.nightgoat.volunteer.ui.main.events.active.ActiveEventsFragment"
+        android:name="ru.nightgoat.volunteer.ui.main.events.my.MyEventsFragment"
         android:label="@string/my_events"
         tools:layout="@layout/fragment_events_my" />
 

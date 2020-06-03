@@ -1,5 +1,6 @@
 package ru.nightgoat.volunteer.extentions
 
+import android.os.Bundle
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -10,6 +11,10 @@ fun Fragment.popBackStack() {
 
 fun Fragment.navigateTo(action: Int) {
     findNavController().navigate(action)
+}
+
+fun Fragment.navigateTo(action: Int, bundle: Bundle) {
+    findNavController().navigate(action, bundle)
 }
 
 fun Fragment.showShortToast(text: String) {

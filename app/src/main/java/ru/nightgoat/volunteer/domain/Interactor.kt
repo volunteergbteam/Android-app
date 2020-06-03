@@ -9,6 +9,8 @@ import ru.nightgoat.volunteer.data.locationRepo.LocationRepository
 import ru.nightgoat.volunteer.data.model.Area
 import ru.nightgoat.volunteer.data.model.EventModel
 import ru.nightgoat.volunteer.data.model.User
+import ru.nightgoat.volunteer.objects.ChatMessage
+import ru.nightgoat.volunteer.objects.ChatRoom
 import ru.nightgoat.volunteer.utils.countDistance
 import timber.log.Timber
 
@@ -26,11 +28,6 @@ class Interactor(
             .andThen(Completable.defer { repository.addUserToDatabase(user) })
     }
 
-    fun getEventsByUser(): Flowable<List<EventModel>> {
-        Timber.tag(TAG).d("getEvents()")
-        return repository.getUser().flatMapPublisher { user -> repository.getEvents(user.city) }
-    }
-
     fun getEventsByGeo(): Flowable<List<EventModel>> {
         return repository.getAreas().zipWith(locationRepository.getLastLocation(),
             BiFunction<List<Area>, LatLng?, Int> { list, currentLocation ->
@@ -44,23 +41,23 @@ class Interactor(
         description: String,
         latLng: LatLng,
         whenEnds: Long,
-        status: Int
+        status: Int,
+        address: String
     ): Completable {
         return repository.getAreas().zipWith(locationRepository.getLastLocation(),
             BiFunction<List<Area>, LatLng?, Int> { list, currentLocation ->
                 return@BiFunction countClosestArea(currentLocation, list).key!!.toInt()
             }).flatMapCompletable { locationId ->
-            repository.getEvents(locationId).first(listOf()).flatMapCompletable { listOfEvents ->
                 repository.addEvent(
                     title,
                     description,
                     latLng,
                     whenEnds,
                     locationId,
-                    listOfEvents.size,
-                    status
+                    status,
+                    address
                 )
-            }
+
         }
     }
 
@@ -83,7 +80,29 @@ class Interactor(
         return locationRepository.geocodeAndFindAddressFromLatLng(latlng)
     }
 
+    fun getChatList() : Flowable<List<ChatRoom>>{
+        return repository.getChatList()
+    }
 
+    fun getChatMessages(eventId: String) : Flowable<ChatMessage> {
+        return repository.getChatMessages(eventId)
+    }
+
+    fun sendMessage(eventId: String, message: ChatMessage) : Completable {
+        return repository.addChatMessage(eventId, message)
+    }
+
+    fun getMyEvents() : Flowable<EventModel> {
+        return repository.getMyEvents()
+    }
+
+    fun getUser() : Single<User> {
+        return repository.getUser()
+    }
+
+    fun help() : Completable{
+        return Completable.complete()
+    }
 }
 
 

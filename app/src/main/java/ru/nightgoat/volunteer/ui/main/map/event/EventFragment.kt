@@ -17,16 +17,18 @@ import kotlinx.android.synthetic.main.frag_map_event.*
 class EventFragment : BaseFragment(){
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+    lateinit var eventId: String
 
-    private val viewModel: AddEventViewModel by lazy {
-        ViewModelProvider(this, viewModelFactory).get(AddEventViewModel::class.java)
+    private val viewModel: EventViewModel by lazy {
+        ViewModelProvider(this, viewModelFactory).get(EventViewModel::class.java)
     }
 
     companion object {
         fun newInstance(event: EventModel) = EventFragment().apply {
             arguments = bundleOf(
                 "title" to event.title,
-                "description" to event.description
+                "description" to event.description,
+                "eventId" to event.id
             )
         }
     }
@@ -44,6 +46,19 @@ class EventFragment : BaseFragment(){
         arguments?.let {
             frag_map_event_title.text = it.getString("title")
             frag_map_event_description.text = it.getString("description")
+            eventId = it.getString("eventId").toString()
+        }
+        onHelpBtnClickListener()
+    }
+
+    /* 1. Добавляет юзеру в helpsEvents / city / eventId
+     * 2. event.status = 1
+     * 3. Создает chats / city / eventId / ChatRoom
+     * 4. Создает messages / eventId / ChatMessage.message = Здравствуйте! Я хочу вам помочь!
+     */
+    private fun onHelpBtnClickListener() {
+        frag_map_event_subscribe.setOnClickListener {
+            viewModel.onHelpBtnClick(eventId)
         }
     }
 }

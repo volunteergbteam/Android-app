@@ -7,11 +7,11 @@ import javax.inject.Inject
 
 class ActiveEventsViewModel @Inject constructor(private val interactor: Interactor) : BaseViewModel(),
     EventsClickListener {
-    override fun onCheckCompletedBtnClickListener(eventId: Int) {
+    override fun onCheckCompletedBtnClickListener(eventId: String) {
 
     }
 
-    override fun onCancelBtnClickListener(eventId: Int) {
+    override fun onCancelBtnClickListener(eventId: String) {
 
     }
 }

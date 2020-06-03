@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.nightgoat.volunteer.R
 import ru.nightgoat.volunteer.data.db.entity.UserEventsWishEntity
+import ru.nightgoat.volunteer.data.model.EventModel
 import ru.nightgoat.volunteer.ui.main.events.EventsClickListener
 
 /**
@@ -16,11 +17,11 @@ import ru.nightgoat.volunteer.ui.main.events.EventsClickListener
 class ActiveEventsViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     RecyclerView.ViewHolder(inflater.inflate(R.layout.item_events_active, parent, false)) {
 
-    fun bind(event: UserEventsWishEntity, clickListener: EventsClickListener) {
+    fun bind(event: EventModel, clickListener: EventsClickListener) {
         itemView.item_events_active_text_title.text = event.title
         itemView.item_events_active_text_description.text = event.description
-        itemView.item_events_active_text_address.text = event.locationAddress
-        itemView.item_events_active_text_name.text = event.ownerName
+        itemView.item_events_active_text_address.text = event.address
+        itemView.item_events_active_text_name.text = event.owner_id
         itemView.item_events_active_btn_check_completed.setOnClickListener {
             clickListener.onCheckCompletedBtnClickListener(event.id)
         }

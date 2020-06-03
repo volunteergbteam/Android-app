@@ -15,6 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginStart="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
+        android:src="@drawable/orange_logo"
         android:contentDescription="@string/avatar" />
 
     <TextView
@@ -43,7 +44,7 @@
         android:layout_marginStart="8dp" />
 
     <TextView
-        android:id="@+id/text_message_time"
+        android:id="@+id/item_chat_received_time"
         tools:text="11:40"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

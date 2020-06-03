@@ -5,4 +5,10 @@ import ru.nightgoat.volunteer.ui.base.BaseViewModel
 import javax.inject.Inject
 
 class EventViewModel @Inject constructor(private val interactor: Interactor) : BaseViewModel() {
+
+    fun onHelpBtnClick(eventId : String){
+        compositeDisposable.add(
+            interactor.help().subscribe()
+        )
+    }
 }

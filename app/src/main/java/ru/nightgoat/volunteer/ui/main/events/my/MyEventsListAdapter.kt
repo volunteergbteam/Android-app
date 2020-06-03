@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.nightgoat.volunteer.data.db.entity.UserEventsNeedEntity
+import ru.nightgoat.volunteer.data.model.EventModel
 import ru.nightgoat.volunteer.ui.main.events.EventsClickListener
 
 /**
@@ -12,7 +13,7 @@ import ru.nightgoat.volunteer.ui.main.events.EventsClickListener
  */
 class MyEventsListAdapter(private val clickListener: EventsClickListener) : RecyclerView.Adapter<MyEventsViewHolder>() {
 
-    private var list: List<UserEventsNeedEntity> = listOf()
+    private var list: MutableSet<EventModel> = mutableSetOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyEventsViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -22,13 +23,13 @@ class MyEventsListAdapter(private val clickListener: EventsClickListener) : Recy
     override fun getItemCount(): Int = list.size
 
     override fun onBindViewHolder(holder: MyEventsViewHolder, position: Int) {
-        val event: UserEventsNeedEntity = list[position]
+        val event = list.toList()[position]
         holder.bind(event, clickListener)
     }
 
-    fun setList(list: List<UserEventsNeedEntity>) {
-        this.list = list
-        notifyDataSetChanged()
+    fun addEvent(event : EventModel) {
+        list.add(event)
+        notifyItemChanged(list.size)
     }
 
 }

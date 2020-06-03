@@ -59,19 +59,6 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/TextInputLayout"
-                android:hint="@string/city">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editAcc_edit__city"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPostalAddress" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/TextInputLayout"
                 android:hint="@string/about_self">
 
                 <com.google.android.material.textfield.TextInputEditText

@@ -8,37 +8,27 @@
     android:layout_marginEnd="8dp"
     android:layout_marginTop="8dp">
 
-    <ImageView
-        android:id="@+id/chat_list_item_avatar"
-        android:layout_width="52dp"
-        android:layout_height="52dp"
-        android:src="@drawable/ic_launcher_background"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/users_avatar" />
-
     <TextView
-        android:id="@+id/chat_list_item_name"
+        android:id="@+id/chat_list_item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/chat_list_item_avatar"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/chat_list_item_text"
+        app:layout_constraintBottom_toTopOf="@id/chat_list_item_timestamp"
         app:layout_constraintVertical_chainStyle="packed"
-        tools:text="Иванов Иван"
+        tools:text="Мне нужна помощь помогите мне так как мне нужна помощь"
         android:textStyle="bold"
         android:textColor="@android:color/black"
-        android:layout_marginStart="16dp"
         android:textSize="16sp"/>
 
     <TextView
-        android:id="@+id/chat_list_item_text"
+        android:id="@+id/chat_list_item_timestamp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/chat_list_item_name"
-        app:layout_constraintTop_toBottomOf="@id/chat_list_item_name"
-        app:layout_constraintBottom_toBottomOf="@id/chat_list_item_avatar"
-        tools:text="Мне нужна помощь помогите мне так как мне нужна помощь"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/chat_list_item_title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:text="02.09.1991"
         android:layout_marginTop="4dp"
         android:maxLines="1"/>
 

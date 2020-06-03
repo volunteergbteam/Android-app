@@ -3,7 +3,8 @@ package ru.nightgoat.volunteer.objects
 import java.util.*
 
 data class ChatMessage(
-    val userName: String,
-    val textMessage: String,
-    val messageTime: Long = Date().time
+    val fromId: String? = "",
+    val name: String? = "",
+    val message: String? = "",
+    val timestamp: Long? = Date().time
 )

@@ -4,4 +4,5 @@ import com.google.android.gms.maps.model.LatLng
 
 interface MapMover {
     fun moveMapTo(destination: LatLng)
+    fun closeBottomPanel()
 }

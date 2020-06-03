@@ -78,6 +78,8 @@ import ru.nightgoat.volunteer.ui.main.account.edit_account.EditAccountViewModel;
 import ru.nightgoat.volunteer.ui.main.account.edit_account.EditAccountViewModel_Factory;
 import ru.nightgoat.volunteer.ui.main.chat.chat.ChatFragment;
 import ru.nightgoat.volunteer.ui.main.chat.chat.ChatFragment_MembersInjector;
+import ru.nightgoat.volunteer.ui.main.chat.chat.ChatViewModel;
+import ru.nightgoat.volunteer.ui.main.chat.chat.ChatViewModel_Factory;
 import ru.nightgoat.volunteer.ui.main.chat.list.ChatListFragment;
 import ru.nightgoat.volunteer.ui.main.chat.list.ChatListFragment_MembersInjector;
 import ru.nightgoat.volunteer.ui.main.chat.list.ChatListViewModel;
@@ -141,6 +143,8 @@ public final class DaggerAppComponent implements AppComponent {
 
   private Provider<ChatListViewModel> chatListViewModelProvider;
 
+  private Provider<ChatViewModel> chatViewModelProvider;
+
   private Provider<ActiveEventsViewModel> activeEventsViewModelProvider;
 
   private Provider<MyEventsViewModel> myEventsViewModelProvider;
@@ -198,13 +202,14 @@ public final class DaggerAppComponent implements AppComponent {
     this.addEventViewModelProvider = AddEventViewModel_Factory.create(provideInteractorProvider);
     this.eventViewModelProvider = EventViewModel_Factory.create(provideInteractorProvider);
     this.chatListViewModelProvider = ChatListViewModel_Factory.create(provideInteractorProvider);
+    this.chatViewModelProvider = ChatViewModel_Factory.create(provideInteractorProvider);
     this.activeEventsViewModelProvider = ActiveEventsViewModel_Factory.create(provideInteractorProvider);
     this.myEventsViewModelProvider = MyEventsViewModel_Factory.create(provideInteractorProvider);
     this.mapViewModelProvider = MapViewModel_Factory.create(provideInteractorProvider);
     this.loginViewModelProvider = LoginViewModel_Factory.create(provideInteractorProvider);
     this.passwordRecoverViewModelProvider = PasswordRecoverViewModel_Factory.create(provideInteractorProvider);
     this.registerViewModelProvider = RegisterViewModel_Factory.create(provideInteractorProvider);
-    this.mapOfClassOfAndProviderOfViewModelProvider = MapProviderFactory.<Class<? extends ViewModel>, ViewModel>builder(13).put(AccountViewModel.class, (Provider) accountViewModelProvider).put(EditAccountViewModel.class, (Provider) editAccountViewModelProvider).put(ChangeEmailViewModel.class, (Provider) changeEmailViewModelProvider).put(ChangePasswordViewModel.class, (Provider) changePasswordViewModelProvider).put(AddEventViewModel.class, (Provider) addEventViewModelProvider).put(EventViewModel.class, (Provider) eventViewModelProvider).put(ChatListViewModel.class, (Provider) chatListViewModelProvider).put(ActiveEventsViewModel.class, (Provider) activeEventsViewModelProvider).put(MyEventsViewModel.class, (Provider) myEventsViewModelProvider).put(MapViewModel.class, (Provider) mapViewModelProvider).put(LoginViewModel.class, (Provider) loginViewModelProvider).put(PasswordRecoverViewModel.class, (Provider) passwordRecoverViewModelProvider).put(RegisterViewModel.class, (Provider) registerViewModelProvider).build();
+    this.mapOfClassOfAndProviderOfViewModelProvider = MapProviderFactory.<Class<? extends ViewModel>, ViewModel>builder(14).put(AccountViewModel.class, (Provider) accountViewModelProvider).put(EditAccountViewModel.class, (Provider) editAccountViewModelProvider).put(ChangeEmailViewModel.class, (Provider) changeEmailViewModelProvider).put(ChangePasswordViewModel.class, (Provider) changePasswordViewModelProvider).put(AddEventViewModel.class, (Provider) addEventViewModelProvider).put(EventViewModel.class, (Provider) eventViewModelProvider).put(ChatListViewModel.class, (Provider) chatListViewModelProvider).put(ChatViewModel.class, (Provider) chatViewModelProvider).put(ActiveEventsViewModel.class, (Provider) activeEventsViewModelProvider).put(MyEventsViewModel.class, (Provider) myEventsViewModelProvider).put(MapViewModel.class, (Provider) mapViewModelProvider).put(LoginViewModel.class, (Provider) loginViewModelProvider).put(PasswordRecoverViewModel.class, (Provider) passwordRecoverViewModelProvider).put(RegisterViewModel.class, (Provider) registerViewModelProvider).build();
     this.viewModelFactoryProvider = DoubleCheck.provider(ViewModelFactory_Factory.create(mapOfClassOfAndProviderOfViewModelProvider));
   }
 
@@ -604,6 +609,7 @@ public final class DaggerAppComponent implements AppComponent {
         injectMyEventsFragment(arg0);}
 
       private MyEventsFragment injectMyEventsFragment(MyEventsFragment instance) {
+        DaggerFragment_MembersInjector.injectAndroidInjector(instance, MainActivitySubcomponentImpl.this.getDispatchingAndroidInjectorOfObject());
         MyEventsFragment_MembersInjector.injectViewModelFactory(instance, DaggerAppComponent.this.viewModelFactoryProvider.get());
         return instance;
       }

@@ -69,11 +69,11 @@ class RegisterFragment : BaseFragment() {
                 isPasswordsAreIdentical && checkNameIsNotEmpty()) {
                 val user = User(
                     name = register_edit_name_first.text.toString(),
-                    secondName = register_edit_name_second.text.toString(),
+                    lastName = register_edit_name_second.text.toString(),
                     about = register_edit_about_me.text.toString(),
-                    city = register_city_spinner.selectedItemPosition,
                     phone = null,
-                    email = register_edit_email.text.toString()
+                    email = register_edit_email.text.toString(),
+                    createdEvents = mutableMapOf()
                 )
                 addDataToSharedPreferences(user)
                 createUser(user)
@@ -85,9 +85,8 @@ class RegisterFragment : BaseFragment() {
 
     private fun addDataToSharedPreferences(user: User) {
         sharedPreferences.edit {
-            putInt("locationId", user.city)
             putString("first_name", user.name)
-            putString("second_name", user.secondName)
+            putString("second_name", user.lastName)
             putString("about", user.about)
             putString("phone", user.phone)
             putString("email", user.email)

@@ -17,7 +17,7 @@
         android:padding="8dp"
         android:textColor="#ffffff"
         android:layout_marginStart="8dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/item_chat_sent_time"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -28,6 +28,6 @@
         android:textSize="12sp"
         android:layout_marginStart="4dp"
         app:layout_constraintBottom_toBottomOf="@+id/item_chat_sent_body"
-        app:layout_constraintStart_toEndOf="@+id/item_chat_sent_body" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -65,7 +65,6 @@ class AccountFragment : BaseFragment() {
         viewModel.userLiveData.observe(viewLifecycleOwner, Observer {
             account_text_name.text = it.name
             account_text_email.text = it.email
-            account_text_city.text = resources.getStringArray(R.array.cities)[it.city]
             account_text_about.text = it.about
         })
     }

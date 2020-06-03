@@ -24,4 +24,4 @@ private fun deg2rad(deg: Double) = deg * Math.PI / 180.0
 
 private fun rad2deg(rad: Double) = (rad * 180.0 / Math.PI)
 
-fun descriptBitMap(resource: Int) = BitmapDescriptorFactory.fromResource(resource)
+fun descriptBitMap(resource: Int): BitmapDescriptor = BitmapDescriptorFactory.fromResource(resource)

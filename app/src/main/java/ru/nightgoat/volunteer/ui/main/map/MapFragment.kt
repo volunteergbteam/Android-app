@@ -62,7 +62,13 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
         onAddEventClickListener()
         fusedLocationProviderClient =
             LocationServices.getFusedLocationProviderClient(requireActivity())
-        if (isPermissionGranted()) {
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED) {
             map_view.onCreate(savedInstanceState)
             map_view.onResume()
             map_view.getMapAsync(this)
@@ -90,15 +96,17 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
                     2 -> descriptBitMap(R.drawable.fire)
                     else -> descriptBitMap(R.drawable.green_logo)
                 }
-                val marker = googleMap.addMarker(
-                    MarkerOptions()
-                        .position(
-                            LatLng(listOfEvents[i].lat, listOfEvents[i].lon)
-                        )
-                        .title(listOfEvents[i].title)
-                        .icon(bitmap)
-                )
-                marker.tag = i
+                if (this::googleMap.isInitialized){
+                    val marker = googleMap.addMarker(
+                        MarkerOptions()
+                            .position(
+                                LatLng(listOfEvents[i].lat, listOfEvents[i].lon)
+                            )
+                            .title(listOfEvents[i].title)
+                            .icon(bitmap)
+                    )
+                    marker.tag = i
+                }
             }
         })
         viewModel.toastLiveData.observe(viewLifecycleOwner, Observer {
@@ -136,23 +144,43 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
                 }
             }
         }
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity(), arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ), 100
+            )
+        }
         LocationServices.getFusedLocationProviderClient(requireActivity())
             .requestLocationUpdates(locationRequest, locationCallback, null)
-    }
-
-    private fun isPermissionGranted(): Boolean {
-        return (ActivityCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.ACCESS_FINE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.ACCESS_COARSE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED)
     }
 
     override fun onMapReady(map: GoogleMap?) {
         map?.let { readyMap ->
             googleMap = readyMap
+            if (ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    requireActivity(), arrayOf(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    ), 100
+                )
+            }
             googleMap.isMyLocationEnabled = true
             googleMap.setOnMarkerClickListener(this)
             getLocationAndZoom(10f)
@@ -171,6 +199,21 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
     }
 
     private fun getLocationAndZoom(zoom: Float) {
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity(), arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ), 100
+            )
+        }
         fusedLocationProviderClient.lastLocation
             .addOnSuccessListener {
                 it?.let {
@@ -187,10 +230,6 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
             .addOnFailureListener {
                 showShortToast(it.message.toString())
             }
-    }
-
-    companion object {
-        val TAG = MapFragment::class.simpleName
     }
 
     override fun onMarkerClick(p0: Marker?): Boolean {
@@ -221,6 +260,11 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
                 .draggable(true)
         )
         tempMarker.tag = -1
+    }
+
+    override fun closeBottomPanel() {
+        val bottomSheetBehavior = BottomSheetBehavior.from(map_bottom_sheet)
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
     }
 
     private fun onMarkerDraggedListener() {

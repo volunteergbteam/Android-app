@@ -22,9 +22,9 @@ class AddEventViewModel @Inject constructor(private val interactor: Interactor) 
     private val draggedMarkerAddressMutableLiveData = MutableLiveData<String>()
     val draggedMarkerAddressLiveData : LiveData<String> = draggedMarkerAddressMutableLiveData
 
-    fun addEvent(title: String, description: String, latLng: LatLng, whenEnds: Long, status: Int){
+    fun addEvent(title: String, description: String, latLng: LatLng, whenEnds: Long, status: Int, address: String){
         compositeDisposable.add(
-            interactor.addEvent(title, description, latLng, whenEnds, status).subscribe()
+            interactor.addEvent(title, description, latLng, whenEnds, status, address).subscribe()
         )
     }
 
