@@ -5,9 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.frag_acc_edit.*
 import ru.nightgoat.volunteer.R
+import ru.nightgoat.volunteer.extentions.navigateTo
+import ru.nightgoat.volunteer.extentions.popBackStack
 import ru.nightgoat.volunteer.ui.base.BaseFragment
 import javax.inject.Inject
 
@@ -37,20 +38,20 @@ class EditAccountFragment : BaseFragment() {
 
     private fun onChangePasswordBtnClickListener() {
         editAcc_btn_edit_password.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_edit_account_to_navigation_edit_account_pass)
+            navigateTo(R.id.action_navigation_edit_account_to_navigation_edit_account_pass)
         }
     }
 
     private fun onChangeEmailBtnClickListener() {
         editAcc_btn_edit_email.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_edit_account_to_navigation_edit_account_email)
+            navigateTo(R.id.action_navigation_edit_account_to_navigation_edit_account_email)
         }
     }
 
     private fun onSaveBtnClickListener() {
         editAcc_btn_save.setOnClickListener {
             saveAccount()
-            findNavController().popBackStack()
+            popBackStack()
         }
     }
 
@@ -59,7 +60,7 @@ class EditAccountFragment : BaseFragment() {
 
     private fun onBackBtnClickListener() {
         editAcc_toolbar.setNavigationOnClickListener {
-            findNavController().popBackStack()
+            popBackStack()
         }
     }
 }

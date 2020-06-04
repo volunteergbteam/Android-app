@@ -1,4 +1,4 @@
-package ru.nightgoat.weather.di.builder
+package ru.nightgoat.volunteer.di.builder
 
 import androidx.lifecycle.ViewModel
 import dagger.Binds
@@ -11,12 +11,14 @@ import ru.nightgoat.volunteer.ui.login.register.RegisterViewModel
 import ru.nightgoat.volunteer.ui.main.account.account_fragment.AccountViewModel
 import ru.nightgoat.volunteer.ui.main.account.changeEmail.ChangeEmailViewModel
 import ru.nightgoat.volunteer.ui.main.account.changePass.ChangePasswordViewModel
-import ru.nightgoat.volunteer.ui.main.addEvent.AddEventViewModel
+import ru.nightgoat.volunteer.ui.main.map.addEvent.AddEventViewModel
 import ru.nightgoat.volunteer.ui.main.chat.list.ChatListViewModel
 import ru.nightgoat.volunteer.ui.main.account.edit_account.EditAccountViewModel
+import ru.nightgoat.volunteer.ui.main.chat.chat.ChatViewModel
 import ru.nightgoat.volunteer.ui.main.events.active.ActiveEventsViewModel
 import ru.nightgoat.volunteer.ui.main.events.my.MyEventsViewModel
 import ru.nightgoat.volunteer.ui.main.map.MapViewModel
+import ru.nightgoat.volunteer.ui.main.map.event.EventViewModel
 
 @Module
 abstract class ViewModelModule {
@@ -50,8 +52,18 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
+    @ViewModelKey(EventViewModel::class)
+    abstract fun bindEventViewModel(EventViewModel: EventViewModel): ViewModel
+
+    @Binds
+    @IntoMap
     @ViewModelKey(ChatListViewModel::class)
     abstract fun bindChatListViewModel(chatListViewModel: ChatListViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ChatViewModel::class)
+    abstract fun bindChatViewModel(chatViewModel: ChatViewModel): ViewModel
 
 
     @Binds

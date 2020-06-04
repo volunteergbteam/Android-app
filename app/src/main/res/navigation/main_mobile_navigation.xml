@@ -17,6 +17,9 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_navigation_map_to_navigation_chat"
+            app:destination="@id/navigation_chat" />
     </fragment>
 
     <fragment
@@ -71,7 +74,7 @@
 
     <fragment
         android:id="@+id/navigation_addEvent"
-        android:name="ru.nightgoat.volunteer.ui.main.addEvent.AddEventFragment"
+        android:name="ru.nightgoat.volunteer.ui.main.map.addEvent.AddEventFragment"
         android:label="@string/add_event"
         tools:layout="@layout/frag_map_add_event" />
 
@@ -83,7 +86,7 @@
 
     <fragment
         android:id="@+id/navigation_events_my"
-        android:name="ru.nightgoat.volunteer.ui.main.events.active.ActiveEventsFragment"
+        android:name="ru.nightgoat.volunteer.ui.main.events.my.MyEventsFragment"
         android:label="@string/my_events"
         tools:layout="@layout/fragment_events_my" />
 

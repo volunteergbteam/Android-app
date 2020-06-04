@@ -2,10 +2,9 @@ package ru.nightgoat.volunteer.di.modules
 
 import android.app.Application
 import android.content.Context
-import androidx.lifecycle.ViewModel
 import dagger.Module
 import dagger.Provides
-import ru.nightgoat.weather.di.builder.ViewModelBuilder
+import ru.nightgoat.volunteer.di.builder.ViewModelBuilder
 import javax.inject.Singleton
 
 @Module(includes = [ViewModelBuilder::class])

@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.frag_acc_edit_pass.*
 
 import ru.nightgoat.volunteer.R
+import ru.nightgoat.volunteer.extentions.popBackStack
 import ru.nightgoat.volunteer.ui.base.BaseFragment
 import javax.inject.Inject
 
@@ -36,7 +37,7 @@ class ChangePasswordFragment : BaseFragment() {
 
     private fun onBackBtnClickListener() {
         changePassword_toolbar.setNavigationOnClickListener {
-            findNavController().popBackStack()
+            popBackStack()
         }
     }
 

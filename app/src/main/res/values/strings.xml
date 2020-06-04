@@ -49,4 +49,9 @@
     <string name="edit_pass">Изменить пароль</string>
     <string name="delete">Удалить</string>
     <string name="title_chat_list">Список диалогов</string>
+
+    <string-array name="cities">
+        <item>Москва</item>
+        <item>Санкт-Петербург</item>
+    </string-array>
 </resources>

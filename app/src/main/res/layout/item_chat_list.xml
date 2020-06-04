@@ -9,36 +9,50 @@
     android:layout_marginTop="8dp">
 
     <ImageView
-        android:id="@+id/chat_list_item_avatar"
-        android:layout_width="52dp"
-        android:layout_height="52dp"
-        android:src="@drawable/ic_launcher_background"
+        android:id="@+id/chat_list_item_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/users_avatar" />
+        android:src="@drawable/orange_logo"
+        android:contentDescription="@string/avatar" />
 
     <TextView
-        android:id="@+id/chat_list_item_name"
+        android:id="@+id/chat_list_item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/chat_list_item_avatar"
+        app:layout_constraintStart_toEndOf="@id/chat_list_item_logo"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/chat_list_item_text"
         app:layout_constraintVertical_chainStyle="packed"
-        tools:text="Иванов Иван"
-        android:textStyle="bold"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintHorizontal_bias="0"
+        tools:text="Мне нужна помощь помогите мне так как мне нужна помощь"
         android:textColor="@android:color/black"
-        android:layout_marginStart="16dp"
         android:textSize="16sp"/>
 
     <TextView
-        android:id="@+id/chat_list_item_text"
+        android:id="@+id/chat_list_item_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/chat_list_item_name"
-        app:layout_constraintTop_toBottomOf="@id/chat_list_item_name"
-        app:layout_constraintBottom_toBottomOf="@id/chat_list_item_avatar"
-        tools:text="Мне нужна помощь помогите мне так как мне нужна помощь"
+        app:layout_constraintStart_toStartOf="@id/chat_list_item_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/chat_list_item_title"
+        android:layout_marginTop="4dp"
+        android:drawableStart="@drawable/ic_place_black_24dp"
+        android:drawablePadding="4dp"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintHorizontal_bias="0"
+        tools:text="Санкт-Петербург, Невский пр. 1, 2"/>
+
+    <TextView
+        android:id="@+id/chat_list_item_timestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/chat_list_item_address"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:text="02.09.1991"
         android:layout_marginTop="4dp"
         android:maxLines="1"/>
 

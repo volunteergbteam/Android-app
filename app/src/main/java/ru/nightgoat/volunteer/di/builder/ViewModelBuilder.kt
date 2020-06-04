@@ -1,8 +1,9 @@
-package ru.nightgoat.weather.di.builder
+package ru.nightgoat.volunteer.di.builder
 
 import androidx.lifecycle.ViewModelProvider
 import dagger.Binds
 import dagger.Module
+import ru.nightgoat.volunteer.di.builder.ViewModelModule
 import ru.nightgoat.volunteer.ui.ViewModelFactory
 
 @Module(includes = [ViewModelModule::class])

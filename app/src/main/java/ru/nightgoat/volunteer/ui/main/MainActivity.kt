@@ -18,11 +18,5 @@ class MainActivity : BaseActivity() {
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.main_nav_host_fragment)
         navView.setupWithNavController(navController)
-
-        val sharedPreferences = getSharedPreferences("settings", Context.MODE_PRIVATE)
-        if (!sharedPreferences.getBoolean("logedIn", false)) {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-        }
     }
 }

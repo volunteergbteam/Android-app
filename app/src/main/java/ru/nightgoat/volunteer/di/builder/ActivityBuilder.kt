@@ -1,8 +1,9 @@
-package ru.nightgoat.weather.di.builder
+package ru.nightgoat.volunteer.di.builder
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import ru.nightgoat.volunteer.di.builder.LoginActivityProviders
+import ru.nightgoat.volunteer.di.builder.MainActivityProviders
 import ru.nightgoat.volunteer.ui.login.LoginActivity
 import ru.nightgoat.volunteer.ui.main.MainActivity
 

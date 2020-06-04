@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -20,17 +19,23 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.frag_map.*
 import ru.nightgoat.volunteer.R
-import ru.nightgoat.volunteer.data.network.model.EventModel
+import ru.nightgoat.volunteer.data.model.EventModel
+import ru.nightgoat.volunteer.extentions.navigateTo
+import ru.nightgoat.volunteer.extentions.showShortToast
 import ru.nightgoat.volunteer.ui.base.BaseFragment
+import ru.nightgoat.volunteer.ui.main.map.addEvent.AddEventFragment
+import ru.nightgoat.volunteer.ui.main.map.event.EventFragment
+import ru.nightgoat.volunteer.utils.descriptBitMap
 import timber.log.Timber
 import javax.inject.Inject
 
-class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener, ParentFragment {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    lateinit var eventsList: List<EventModel>
+    private lateinit var eventsList: List<EventModel>
+    private lateinit var markerLatLngGetter: MarkerLatLngGetter
 
     private val viewModel: MapViewModel by lazy {
         ViewModelProvider(this, viewModelFactory).get(MapViewModel::class.java)
@@ -41,6 +46,7 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
     private lateinit var currentCoord: LatLng
     private lateinit var locationRequest: LocationRequest
     private lateinit var locationCallback: LocationCallback
+    private lateinit var tempMarker : Marker
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,12 +61,20 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
         onAddEventClickListener()
         fusedLocationProviderClient =
             LocationServices.getFusedLocationProviderClient(requireActivity())
-        if (isPermissionGranted()) {
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED) {
             map_view.onCreate(savedInstanceState)
             map_view.onResume()
             map_view.getMapAsync(this)
             createLocationRequest()
             observeViewModel()
+            childFragmentManager.beginTransaction().add(R.id.map_bottom_sheet, EventFragment())
+            viewModel.subscribeToEventsByGeo()
         } else {
             ActivityCompat.requestPermissions(
                 requireActivity(), arrayOf(
@@ -73,19 +87,25 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
     }
 
     private fun observeViewModel() {
-        lifecycle.addObserver(viewModel)
         viewModel.eventsListLiveData.observe(viewLifecycleOwner, Observer { listOfEvents ->
             eventsList = listOfEvents
             for (i in listOfEvents.indices) {
-                Timber.tag(TAG).d(listOfEvents[i].id.toString())
-                val marker = googleMap.addMarker(
-                    MarkerOptions()
-                        .position(
-                            LatLng(listOfEvents[i].locationLat, listOfEvents[i].locationLon)
-                        )
-                        .title(listOfEvents[i].title)
-                )
-                marker.tag = i
+                val bitmap = when (eventsList[i].status) {
+                    1 -> descriptBitMap(R.drawable.orange_logo)
+                    2 -> descriptBitMap(R.drawable.fire)
+                    else -> descriptBitMap(R.drawable.green_logo)
+                }
+                if (this::googleMap.isInitialized){
+                    val marker = googleMap.addMarker(
+                        MarkerOptions()
+                            .position(
+                                LatLng(listOfEvents[i].lat, listOfEvents[i].lon)
+                            )
+                            .title(listOfEvents[i].title)
+                            .icon(bitmap)
+                    )
+                    marker.tag = i
+                }
             }
         })
         viewModel.toastLiveData.observe(viewLifecycleOwner, Observer {
@@ -95,7 +115,13 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
 
     private fun onAddEventClickListener() {
         map_fab_add.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_map_to_navigation_addEvent)
+            val fragment = AddEventFragment.newInstance(this)
+            markerLatLngGetter = fragment
+            childFragmentManager.beginTransaction().replace(R.id.map_bottom_sheet,
+                fragment
+            ).commit()
+            val bottomSheetBehavior = BottomSheetBehavior.from(map_bottom_sheet)
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         }
     }
 
@@ -117,33 +143,76 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
                 }
             }
         }
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity(), arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ), 100
+            )
+        }
         LocationServices.getFusedLocationProviderClient(requireActivity())
             .requestLocationUpdates(locationRequest, locationCallback, null)
-    }
-
-    private fun isPermissionGranted(): Boolean {
-        return (ActivityCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.ACCESS_FINE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.ACCESS_COARSE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED)
     }
 
     override fun onMapReady(map: GoogleMap?) {
         map?.let { readyMap ->
             googleMap = readyMap
+            if (ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    requireActivity(), arrayOf(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    ), 100
+                )
+            }
             googleMap.isMyLocationEnabled = true
             googleMap.setOnMarkerClickListener(this)
             getLocationAndZoom(10f)
-            map_fab_getPosition.setOnClickListener {
-                getLocationAndZoom(15f)
-            }
+//            map_fab_getPosition.setOnClickListener {
+//                getLocationAndZoom(15f)
+//            }
+            onMarkerDraggedListener()
+            onMapClickListener()
+        }
+    }
+
+    private fun onMapClickListener() {
+        googleMap.setOnMapClickListener {
+            if (this::tempMarker.isInitialized) tempMarker.remove()
         }
     }
 
     private fun getLocationAndZoom(zoom: Float) {
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity(), arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ), 100
+            )
+        }
         fusedLocationProviderClient.lastLocation
             .addOnSuccessListener {
                 it?.let {
@@ -162,23 +231,60 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
             }
     }
 
-    companion object {
-        val TAG = MapFragment::class.simpleName
-    }
-
     override fun onMarkerClick(p0: Marker?): Boolean {
-        return if (p0 != null) {
+        return if (p0 != null && p0.tag != -1) {
             val event = eventsList[p0.tag.toString().toInt()]
-            map_bottom_sheet_title.text = event.title
-            map_bottom_sheet_description.text = event.description
+            childFragmentManager
+                .beginTransaction()
+                .replace(R.id.map_bottom_sheet, EventFragment.newInstance(event, this))
+                .commit()
             val bottomSheetBehavior = BottomSheetBehavior.from(map_bottom_sheet)
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
             googleMap.moveCamera(
                 CameraUpdateFactory
-                    .newLatLngZoom(LatLng(event.locationLat, event.locationLon), 15f)
+                    .newLatLngZoom(LatLng(event.lat, event.lon), 15f)
             )
             true
         } else false
+    }
+
+    override fun moveMapTo(destination: LatLng) {
+        Timber.d("moveCamera to ${destination.describeContents()}")
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(destination, 15f))
+        tempMarker = googleMap.addMarker(
+            MarkerOptions()
+                .position(
+                    LatLng(destination.latitude, destination.longitude)
+                )
+                .draggable(true)
+        )
+        tempMarker.tag = -1
+    }
+
+    override fun closeBottomPanel() {
+        val bottomSheetBehavior = BottomSheetBehavior.from(map_bottom_sheet)
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+    }
+
+    override fun goToChat(event: EventModel) {
+        val bundle = Bundle()
+        bundle.putParcelable("event", event)
+        navigateTo(R.id.action_navigation_map_to_navigation_chat, bundle)
+    }
+
+    private fun onMarkerDraggedListener() {
+        googleMap.setOnMarkerDragListener(object : GoogleMap.OnMarkerDragListener {
+            override fun onMarkerDragEnd(p0: Marker?) {
+                p0?.position?.let{ markerLatLngGetter.getMarkerLatLng(it) }
+            }
+
+            override fun onMarkerDragStart(p0: Marker?) {
+            }
+
+            override fun onMarkerDrag(p0: Marker?) {
+
+            }
+        })
     }
 
 }

@@ -1,29 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
     android:orientation="vertical"
     tools:context=".ui.login.register.RegisterFragment">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/addEvent_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:navigationIcon="@drawable/ic_cancel_black_24dp"
-        app:title="Создать событие" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
         <com.google.android.material.textfield.TextInputLayout
-            android:hint="@string/header"
+            android:id="@+id/addEvent_layout_title"
             style="@style/TextInputLayout"
-            >
+            android:hint="@string/header">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/addEvent_edit_header"
@@ -34,51 +24,89 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:hint="@string/description"
+            android:id="@+id/addEvent_layout_description"
             style="@style/TextInputLayout"
-            >
+            android:hint="@string/description"
+            app:endIconMode="custom"
+            app:endIconDrawable="@drawable/ic_timer_black_24dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/addEvent_edit_description"
-                style="@style/AboutTextInput" />
+                style="@style/AboutTextInput"
+                />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/addEvent_layout_address"
+            style="@style/TextInputLayout"
             android:hint="@string/address"
-            style="@style/TextInputLayout">
+            app:endIconContentDescription="@string/search"
+            app:endIconDrawable="@drawable/ic_search_black_24dp"
+            app:endIconMode="custom"
+            app:startIconDrawable="@drawable/ic_edit_location_black_24dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/addEvent_edit_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:drawableStart="@drawable/ic_edit_location_black_24dp"
-                android:drawablePadding="8dp"/>
+                android:imeOptions="actionSearch"
+                android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:hint="@string/whenEnds"
-            style="@style/TextInputLayout">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/addEvent_edit_whenEnds"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="datetime"
-                android:drawableStart="@drawable/ic_timer_black_24dp"
-                android:drawablePadding="8dp"/>
+        <ImageButton
+            android:id="@+id/addEvent_btn_save"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_save_white_24dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:clickable="false"
+            android:contentDescription="@string/save" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+         <RadioGroup
+             android:id="@+id/addEvent_radio_group"
+             android:layout_width="0dp"
+             android:layout_weight="3"
+             android:layout_height="wrap_content"
+             android:orientation="horizontal"
+             android:layout_marginEnd="16dp"
 
+             >
+             <RadioButton
+                 android:id="@+id/addEvent_radio_green"
+                 android:layout_width="0dp"
+                 android:layout_weight="1"
+                 android:layout_height="wrap_content"
+                 android:drawableStart="@drawable/green_logo"
+                 android:checked="true"
+                 />
+             <RadioButton
+                 android:id="@+id/addEvent_radio_yellow"
+                 android:layout_width="0dp"
+                 android:layout_weight="1"
+                 android:layout_height="wrap_content"
+                 android:drawableStart="@drawable/orange_logo"/>
+
+             <RadioButton
+                 android:id="@+id/addEvent_radio_red"
+                 android:layout_width="0dp"
+                 android:layout_weight="1"
+                 android:layout_height="wrap_content"
+                 android:drawableStart="@drawable/fire" />
+
+
+
+
+         </RadioGroup>
     </LinearLayout>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/addEvent_btn_save"
-        android:text="@string/save"
-        style="@style/Button"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"/>
 
 </LinearLayout>

@@ -66,19 +66,6 @@
             style="@style/Profile.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/city" />
-
-        <TextView
-            android:id="@+id/account_text_city"
-            style="@style/Profile.Text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="Санкт-Петербург" />
-
-        <TextView
-            style="@style/Profile.Title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:text="@string/about_self" />
 
         <TextView
